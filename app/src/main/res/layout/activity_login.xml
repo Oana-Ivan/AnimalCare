@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background_2"
+    tools:context=".authentication.LoginActivity">
+
+    <LinearLayout
+        android:id="@+id/activity_login_ll_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/activity_login_ll_form"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/activity_login_tv_page_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:text="@string/log_in" />
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/activity_login_fragment_app_name"
+            android:name="com.example.animalcare.fragments.AppNameAndLogoFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_login_ll_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/activity_login_et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/enter_username"
+            android:background="@color/color_schema_background"
+            android:padding="15dp"
+            />
+
+        <EditText
+            android:id="@+id/activity_login_et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/enter_password"
+            android:background="@color/color_schema_background"
+            android:padding="15dp"
+            android:layout_marginTop="15dp"
+            />
+
+        <CheckBox
+            android:id="@+id/activity_login_cb_volunteer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/volunteer"
+            android:layout_marginTop="15dp"
+            android:background="@color/color_schema_background_2"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/activity_login_btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/button"
+            android:text="@string/log_in"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

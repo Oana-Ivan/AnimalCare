@@ -4,6 +4,7 @@
     <color name="color_schema_light">#03815A</color>
     <color name="color_schema_main">#024E36</color>
     <color name="color_schema_background">#F0F4F1</color>
+    <color name="color_schema_background_2">#79BC89</color>
 
     <color name="purple_200">#FF6200EE</color>
     <color name="purple_500">#FF6200EE</color>

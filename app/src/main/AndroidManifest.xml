@@ -2,13 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.animalcare">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_animal_care"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo_animal_care"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnimalCare">
+        <activity android:name=".authentication.LoginAdminActivity"></activity>
+        <activity android:name=".authentication.RegisterActivity" />
+        <activity android:name=".authentication.LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background_2"
+    tools:context=".authentication.RegisterActivity">
+
+
+    <LinearLayout
+        android:id="@+id/activity_register_ll_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/activity_register_ll_form"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/activity_register_tv_page_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="@string/register" />
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/activity_register_fragment_app_name"
+            android:name="com.example.animalcare.fragments.AppNameAndLogoFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_register_ll_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/activity_register_et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/enter_username"
+            android:background="@color/color_schema_background"
+            android:padding="15dp"
+            />
+
+        <EditText
+            android:id="@+id/activity_register_et_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/enter_first_name"
+            android:background="@color/color_schema_background"
+            android:padding="15dp"
+            android:layout_marginTop="15dp"
+            />
+
+        <EditText
+            android:id="@+id/activity_register_et_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/enter_last_name"
+            android:background="@color/color_schema_background"
+            android:padding="15dp"
+            android:layout_marginTop="15dp"
+            />
+
+        <EditText
+            android:id="@+id/activity_register_et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/enter_email"
+            android:background="@color/color_schema_background"
+            android:padding="15dp"
+            android:layout_marginTop="15dp"
+            />
+
+        <EditText
+            android:id="@+id/activity_register_et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/enter_password"
+            android:background="@color/color_schema_background"
+            android:padding="15dp"
+            android:layout_marginTop="15dp"
+            />
+
+        <EditText
+            android:id="@+id/activity_register_et_password_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/re_enter_password"
+            android:background="@color/color_schema_background"
+            android:padding="15dp"
+            android:layout_marginTop="15dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/activity_register_btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:padding="10dp"
+            android:background="@drawable/button"
+            android:textColor="@color/white"
+            android:text="@string/register_to_adopt"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

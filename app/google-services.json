@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "565268983507",
+    "project_id": "animalcare-3a0aa",
+    "storage_bucket": "animalcare-3a0aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565268983507:android:2fc320d6b59612643fee26",
+        "android_client_info": {
+          "package_name": "com.example.animalcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565268983507-j6cmevk88n19v7qrl4b1abc2t77gc4fu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk2lDEpjOW5DLsDMkpo5GvrqOQ6_aSd1I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565268983507-j6cmevk88n19v7qrl4b1abc2t77gc4fu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
