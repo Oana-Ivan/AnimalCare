@@ -14,4 +14,16 @@
     <string name="volunteer">I am a volunteer</string>
     <string name="login_as_administrator">LogIn as Administrator</string>
     <string name="log_in_admin">Admin - login</string>
+    <string name="adopter">ADOPTER</string>
+    <string name="username">username</string>
+    <string name="first_name">Firstname</string>
+    <string name="last_name">Last name</string>
+    <string name="name">Name</string>
+    <string name="email">email</string>
+    <string name="schedule_visit">Schedule visit</string>
+    <string name="logout">LogOut</string>
+    <string name="actions">Actions</string>
+    <string name="see_all_animals">See all animals</string>
+    <string name="recommend_animals_for_you">Let us recommend animals for you</string>
+    <string name="animals_you_saved">Animals you saved</string>
 </resources>

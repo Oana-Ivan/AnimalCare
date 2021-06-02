@@ -1,31 +1,25 @@
 package com.example.animalcare;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.animalcare.usersMainScreens.AdopterHomeActivity;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.content.ContentValues.TAG;
+import static com.example.animalcare.authentication.RegisterActivity.ADMIN;
+import static com.example.animalcare.authentication.RegisterActivity.ADOPTER;
+import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
+import static com.example.animalcare.authentication.RegisterActivity.UserRole;
+import static com.example.animalcare.authentication.RegisterActivity.Username;
+import static com.example.animalcare.authentication.RegisterActivity.VOLUNTEER;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private static final int timeOut = 2000;
@@ -87,9 +81,31 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 finish();
-                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                startActivity(intent);
-                // TODO If username from user preferences is not empty, redirect to user page
+                // Retrieve username from sharedPreferences
+                SharedPreferences sharedpreferences = getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);
+                String username = sharedpreferences.getString(Username, "");
+                if (username.equals("")) {
+                    Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    String userRole = sharedpreferences.getString(UserRole, "");
+                    if (userRole.equals(ADOPTER)) {
+                        // Redirect to AdopterHomeActivity
+                        Intent intent = new Intent(SplashScreenActivity.this, AdopterHomeActivity.class);
+                        startActivity(intent);
+                    }
+                    else if (userRole.equals(VOLUNTEER)) {
+                        // TODO Redirect to VolunteerHomeActivity
+                        Intent intent = new Intent(SplashScreenActivity.this, AdopterHomeActivity.class);
+                        startActivity(intent);
+                    }
+                    else { // if (userRole.equals(ADMIN))
+                        // TODO Redirect to AdminHomeActivity
+                        Intent intent = new Intent(SplashScreenActivity.this, AdopterHomeActivity.class);
+                        startActivity(intent);
+                    }
+                }
             }
         }, timeOut);
     }

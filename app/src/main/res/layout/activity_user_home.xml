@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_schema_background_2"
+    tools:context=".usersMainScreens.AdopterHomeActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="30dp"
+            android:background="@color/white_transparent"
+            android:orientation="vertical"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/adopter"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/color_schema_background_2_transparent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/activity_adopter_home_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/name" />
+
+                <TextView
+                    android:id="@+id/activity_adopter_home_tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/email" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/activity_adopter_home_ll_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="30dp"
+        android:background="@color/white_transparent"
+        android:orientation="vertical"
+        android:padding="15dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_adopter_info"
+        app:layout_constraintVertical_bias="0.2"
+        tools:layout_editor_absoluteX="30dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/actions"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_margin="5dp"
+            android:padding="5dp"/>
+
+        <LinearLayout
+            android:id="@+id/activity_adopter_home_ll_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/calendar"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:gravity="center"
+                android:text="@string/schedule_visit" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/activity_adopter_home_ll_all_animals"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/cat"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:gravity="center"
+                android:text="@string/see_all_animals" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/activity_adopter_home_ll_rec_animals"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/paw"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:gravity="center"
+                android:text="@string/recommend_animals_for_you" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/activity_adopter_home_ll_saved_animals"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/saved_animals"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:gravity="center"
+                android:text="@string/animals_you_saved" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/activity_adopter_home_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:text="@string/logout" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

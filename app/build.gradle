@@ -82,5 +82,7 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
 
+    compile 'com.github.Hitomis:CircleMenu:v1.1.0'
+
 
 }
