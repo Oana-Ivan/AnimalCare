@@ -26,4 +26,6 @@
     <string name="see_all_animals">See all animals</string>
     <string name="recommend_animals_for_you">Let us recommend animals for you</string>
     <string name="animals_you_saved">Animals you saved</string>
+    <string name="volunteer_caps">VOLUNTEER</string>
+    <string name="program">Program</string>
 </resources>

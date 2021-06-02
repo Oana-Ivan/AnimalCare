@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/logo_animal_care"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnimalCare">
-        <activity android:name=".usersMainScreens.AdminHomeActivity"></activity>
+        <activity android:name=".usersMainScreens.VolunteerHomeActivity"></activity>
+        <activity android:name=".usersMainScreens.AdminHomeActivity" />
         <activity android:name=".usersMainScreens.AdopterHomeActivity" />
         <activity android:name=".authentication.LoginAdminActivity" />
         <activity android:name=".authentication.RegisterActivity" />

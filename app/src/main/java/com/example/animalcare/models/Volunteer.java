@@ -8,6 +8,9 @@ public class Volunteer extends BasicUser{
     private List<String> workingDays;
     private String startingDate;
 
+    public Volunteer() {
+    }
+
     public Volunteer(String username, String firstName, String lastName, String email, String hashPassword, int startingHour, int endingHour, List<String> workingDays, String startingDate) {
         super(username, firstName, lastName, email, hashPassword);
         this.startingHour = startingHour;

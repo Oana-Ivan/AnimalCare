@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.animalcare.R;
 import com.example.animalcare.models.BasicUser;
 import com.example.animalcare.usersMainScreens.AdopterHomeActivity;
+import com.example.animalcare.usersMainScreens.VolunteerHomeActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -64,7 +65,10 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString(Username, username);
                                     editor.putString(UserRole, VOLUNTEER);
                                     editor.apply();
-                                    // TODO Redirect to volunteer page
+
+                                    // Redirect to volunteer page
+                                    startActivity(new Intent(LoginActivity.this, VolunteerHomeActivity.class));
+
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Wrong credentials", Toast.LENGTH_LONG).show();
                                 }
