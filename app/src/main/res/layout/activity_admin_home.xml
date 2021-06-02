@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_schema_background_2"
+    tools:context=".usersMainScreens.AdminHomeActivity">
+
+    <TextView
+        android:id="@+id/activity_admin_home_tv"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ADMIN - Homepage"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <com.hitomi.cmlibrary.CircleMenu
+        android:id="@+id/activity_admin_home_circle_menu"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_admin_home_tv" />
+
+    <TextView
+        android:id="@+id/activity_admin_home_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        android:text="@string/logout"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_admin_home_circle_menu"
+        app:layout_constraintTop_toBottomOf="@+id/activity_admin_home_circle_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

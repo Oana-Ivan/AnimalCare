@@ -4,14 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.models.Admin;
+import com.example.animalcare.usersMainScreens.AdminHomeActivity;
 
 import static com.example.animalcare.authentication.RegisterActivity.ADMIN;
 import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
@@ -50,7 +53,9 @@ public class LoginAdminActivity extends AppCompatActivity {
                 editor.putString(UserRole, ADMIN);
                 editor.apply();
 
-                // TODO Redirect to admin page
+                // Redirect to admin page
+                Intent intent = new Intent(LoginAdminActivity.this, AdminHomeActivity.class);
+                startActivity(intent);
             }
             else {
                 Toast.makeText(LoginAdminActivity.this, "Wrong credentials", Toast.LENGTH_LONG).show();

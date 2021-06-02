@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.animalcare.usersMainScreens.AdminHomeActivity;
 import com.example.animalcare.usersMainScreens.AdopterHomeActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -101,8 +102,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else { // if (userRole.equals(ADMIN))
-                        // TODO Redirect to AdminHomeActivity
-                        Intent intent = new Intent(SplashScreenActivity.this, AdopterHomeActivity.class);
+                        // Redirect to AdminHomeActivity
+                        Intent intent = new Intent(SplashScreenActivity.this, AdminHomeActivity.class);
                         startActivity(intent);
                     }
                 }
