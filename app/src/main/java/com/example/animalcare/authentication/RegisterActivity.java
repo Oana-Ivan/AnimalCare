@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.room.Room;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.example.animalcare.models.BasicUser;
 import com.example.animalcare.roomDatabase.AppDatabase;
 import com.example.animalcare.roomDatabase.dao.UserDAO;
 import com.example.animalcare.roomDatabase.entity.User;
+import com.example.animalcare.usersMainScreens.AdopterHomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText firstNameET, lastNameET, usernameET, emailET, passwordET, verifyPasswordET;
     private AppCompatButton btnRegister;
     private String firstName, lastName, username, email, password, verifyPassword;
-    private static final int LOG_ROUNDS = 5;
+    public static final int LOG_ROUNDS = 5;
     public static final String UserPREFERENCES = "UserPreferences";
     public static final String Username = "username";
     public static final String UserRole = "UserRole";
@@ -68,7 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             // if user provided all information (all fields are required)
             if (!emptyFields()) {
-
                 // verify if the username already exists
                 usersCollection.document(username).get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -98,7 +99,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 editor.putString(UserRole, ADOPTER);
                                 editor.apply();
 
-                                // TODO Redirect to user page
+                                // Redirect to user activity
+                                startActivity(new Intent(RegisterActivity.this, AdopterHomeActivity.class));
                             }
                         }
                     } else {

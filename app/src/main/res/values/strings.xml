@@ -28,4 +28,20 @@
     <string name="animals_you_saved">Animals you saved</string>
     <string name="volunteer_caps">VOLUNTEER</string>
     <string name="program">Program</string>
+    <string name="volunteers">Volunteers</string>
+    <string name="volunteer_details">Volunteer details</string>
+    <string name="volunteer_email">Volunteer email</string>
+    <string name="volunteer_program">Volunteer program</string>
+    <string name="add_volunteer">Add volunteer</string>
+    <string name="enter_starting_day">Enter starting date (dd/mm/yyyy)</string>
+    <string name="starting_hour">Starting hour:</string>
+    <string name="eg_9">Eg. 9</string>
+    <string name="eg_14">Eg. 14</string>
+    <string name="ending_hour">Ending hour:</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="working_days">Working days</string>
 </resources>

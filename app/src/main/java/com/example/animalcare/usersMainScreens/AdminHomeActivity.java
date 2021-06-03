@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.animalcare.CRUD.VolunteersListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.SplashScreenActivity;
@@ -73,7 +74,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                         break;
                     case 1:
                         // Volunteers
-                        startActivity(new Intent(AdminHomeActivity.this, RegisterActivity.class));
+                        startActivity(new Intent(AdminHomeActivity.this, VolunteersListActivity.class));
                         break;
                     case 2:
                         // Shelter Management

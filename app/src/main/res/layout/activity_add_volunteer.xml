@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_schema_background_2"
+    tools:context=".CRUD.AddVolunteerActivity">
+
+    <TextView
+        android:id="@+id/activity_add_volunteer_tv_title"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:background="@color/color_schema_light_transparent"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="@string/add_volunteer"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="15dp"
+        android:padding="10dp"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_add_volunteer_tv_title"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="15dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_schema_background_2_transparent"
+            android:orientation="vertical"
+            android:padding="20dp">
+            <EditText
+                android:id="@+id/activity_add_volunteer_et_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/white"
+                android:hint="@string/enter_username"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
+                />
+            <EditText
+                android:id="@+id/activity_add_volunteer_et_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/white"
+                android:hint="@string/enter_first_name"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
+                />
+            <EditText
+                android:id="@+id/activity_add_volunteer_et_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/white"
+                android:hint="@string/enter_last_name"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
+                />
+            <EditText
+                android:id="@+id/activity_add_volunteer_et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/white"
+                android:hint="@string/enter_email"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
+                />
+            <EditText
+                android:id="@+id/activity_add_volunteer_et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/white"
+                android:hint="@string/enter_password"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
+                />
+            <TextView
+                android:id="@+id/activity_add_volunteer_tv_program"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="@string/program"
+                android:padding="5dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="20sp"
+                />
+            <EditText
+                android:id="@+id/activity_add_volunteer_et_starting_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/white"
+                android:hint="@string/enter_starting_day"
+                android:padding="5dp"
+                android:layout_marginBottom="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/activity_add_volunteer_tv_starting_hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:text="@string/starting_hour"
+                    android:padding="5dp"
+                    android:layout_marginBottom="10dp"
+                    />
+                <EditText
+                    android:id="@+id/activity_add_volunteer_et_starting_hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+
+                    android:background="@color/white"
+                    android:hint="@string/eg_9"
+                    android:padding="5dp"
+                    android:inputType="number"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/activity_add_volunteer_tv_ending_hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:text="@string/ending_hour"
+                    android:padding="5dp"
+                    android:layout_marginBottom="10dp"
+                    />
+                <EditText
+                    android:id="@+id/activity_add_volunteer_et_ending_hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+
+                    android:background="@color/white"
+                    android:hint="@string/eg_14"
+                    android:padding="5dp"
+                    android:inputType="number"
+                    />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/activity_add_volunteer_tv_working_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:text="@string/working_days"
+                android:padding="5dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="20sp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/activity_add_volunteer_cb_monday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/monday"
+                />
+            <CheckBox
+                android:id="@+id/activity_add_volunteer_cb_tuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tuesday"
+                />
+            <CheckBox
+                android:id="@+id/activity_add_volunteer_cb_wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wednesday"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/activity_add_volunteer_cb_thursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/thursday"
+                />
+            <CheckBox
+                android:id="@+id/activity_add_volunteer_cb_friday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/friday"
+                />
+            </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/activity_add_volunteer_btn_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_light"
+                    android:text="@string/add_volunteer"
+                    android:textColor="@color/white"
+                    android:padding="5dp"/>
+            </LinearLayout>
+    </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
