@@ -44,4 +44,40 @@
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
     <string name="working_days">Working days</string>
+    <string name="title_activity_add_animal">AddAnimalActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="animal_details">Animal details</string>
+    <string name="animals">Animals</string>
+    <string name="add_animal">Add animal</string>
+    <string name="add_animal_info">Add animal information</string>
+    <string name="enter_arriving_date">Enter arriving date</string>
+    <string name="enter_species">Enter species</string>
+    <string name="enter_age">Enter age</string>
+    <string name="enter_color">Enter animal color(s)</string>
+    <string name="enter_description">Enter description</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="species">Species</string>
+    <string name="dog">Dog</string>
+    <string name="cat">Cat</string>
+    <string name="suspected_of_the_disease">Suspected of the disease</string>
+    <string name="suspected_of_disease">Suspected of disease</string>
+    <string name="personality">Personality</string>
+    <string name="inactiv">Inactiv</string>
+    <string name="active">Activ</string>
+    <string name="activ_inactiv">50% activ - 50% activ</string>
+    <string name="middle">Middle</string>
+    <string name="size">Size</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="big">Big</string>
+    <string name="tv_upload_pictuare_message">* Press the image above to upload animal picture</string>
 </resources>

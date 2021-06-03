@@ -7,17 +7,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.animalcare.models.Volunteer;
+import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.usersMainScreens.AdminHomeActivity;
 import com.example.animalcare.usersMainScreens.AdopterHomeActivity;
 import com.example.animalcare.usersMainScreens.VolunteerHomeActivity;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.example.animalcare.authentication.RegisterActivity.ADMIN;
 import static com.example.animalcare.authentication.RegisterActivity.ADOPTER;
 import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
 import static com.example.animalcare.authentication.RegisterActivity.UserRole;
@@ -26,9 +23,6 @@ import static com.example.animalcare.authentication.RegisterActivity.VOLUNTEER;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private static final int timeOut = 1200;
-    // cloud database
-//    public FirebaseFirestore db;
-//    public CollectionReference usersCollection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,45 +65,3 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
 }
-
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        // Create a new user with a first and last name
-//        Map<String, Object> user = new HashMap<>();
-//        user.put("firstName", "Ada");
-//        user.put("lastName", "Lovelace");
-//        user.put("email", "1815");
-//        user.put("hashPassword", "1815");
-//        user.put("role", "ADOPTER");
-//        user.put("username", "1815");
-//
-//        // Add a new document with a generated ID
-//        db.collection("Users")
-//                .add(user)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding document", e);
-//                    }
-//                });
-//
-//        db.collection("Users")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " => " + document.getData().get("firstName"));
-//                                Toast.makeText(SplashScreenActivity.this, document.getData().get("firstName").toString(), Toast.LENGTH_LONG).show();
-//                            }
-//                        } else {
-//                            Log.w(TAG, "Error getting documents.", task.getException());
-//                        }
-//                    }
-//                });

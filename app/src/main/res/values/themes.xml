@@ -15,4 +15,13 @@
         <item name="windowNoTitle">true</item>
         <item name="colorAccent">@color/color_schema_main</item>
     </style>
+
+    <style name="Theme.AnimalCare.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.AnimalCare.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.AnimalCare.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
