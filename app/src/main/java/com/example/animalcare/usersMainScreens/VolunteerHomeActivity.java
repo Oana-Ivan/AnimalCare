@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.authentication.LoginActivity;
@@ -105,7 +106,7 @@ public class VolunteerHomeActivity extends AppCompatActivity {
                 switch (option) {
                     case 0:
                         // Animals
-                        startActivity(new Intent(VolunteerHomeActivity.this, LoginActivity.class));
+                        startActivity(new Intent(VolunteerHomeActivity.this, AnimalsListActivity.class));
                         break;
                     case 1:
                         // Shelter Management

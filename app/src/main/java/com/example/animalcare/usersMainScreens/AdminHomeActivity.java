@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.CRUD.VolunteersListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
@@ -42,6 +43,13 @@ public class AdminHomeActivity extends AppCompatActivity {
         CircleMenu circleMenu = (CircleMenu) findViewById(R.id.activity_admin_home_circle_menu);
         logOut = findViewById(R.id.activity_admin_home_logout);
 
+//        circleMenu.setMainMenu(Color.parseColor("#024E36"), R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground)
+//                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.ic_launcher_foreground)
+//                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.ic_launcher_foreground)
+//                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.ic_launcher_foreground)
+//                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.ic_launcher_foreground)
+//                .setOnMenuSelectedListener(this::openActivity);
+
         circleMenu.setMainMenu(Color.parseColor("#024E36"), R.drawable.dog_home, R.drawable.cancel)
                 .addSubMenu(Color.parseColor("#79BC89"), R.drawable.cat)
                 .addSubMenu(Color.parseColor("#79BC89"), R.drawable.contact)
@@ -70,7 +78,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                 switch (option) {
                     case 0:
                         // Animals
-                        startActivity(new Intent(AdminHomeActivity.this, LoginActivity.class));
+                        startActivity(new Intent(AdminHomeActivity.this, AnimalsListActivity.class));
                         break;
                     case 1:
                         // Volunteers

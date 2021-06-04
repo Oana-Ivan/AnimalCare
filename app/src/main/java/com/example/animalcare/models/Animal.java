@@ -24,6 +24,9 @@ public class Animal {
     private int attentionLevelRequired;
     private int caringLevelRequired;
 
+    public Animal() {
+    }
+
     public Animal(String arrivingDate, double age, String gender, String species, String color, String description, boolean disease, int personalityType, int size, String animalID, String image) {
         this.arrivingDate = arrivingDate;
         this.age = age;

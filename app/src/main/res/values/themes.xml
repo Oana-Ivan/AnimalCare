@@ -15,6 +15,20 @@
         <item name="windowNoTitle">true</item>
         <item name="colorAccent">@color/color_schema_main</item>
     </style>
+    <style name="Theme.AnimalCareActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/color_schema_main</item>
+        <item name="colorPrimaryVariant">@color/color_schema_main</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color_schema_light</item>
+        <item name="colorSecondaryVariant">@color/color_schema_light</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/color_schema_main</item>
+    </style>
 
     <style name="Theme.AnimalCare.NoActionBar">
         <item name="windowActionBar">false</item>

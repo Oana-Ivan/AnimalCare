@@ -53,6 +53,10 @@
                     android:id="@+id/activity_add_animal_img"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:scaleType="centerCrop"
                     android:layout_gravity="center"
                     android:padding="10dp"
                     android:src="@drawable/paw"
@@ -98,7 +102,7 @@
                 <EditText
                     android:id="@+id/activity_add_animal_et_description"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="50dp"
 
                     android:background="@color/white"
                     android:hint="@string/enter_description"

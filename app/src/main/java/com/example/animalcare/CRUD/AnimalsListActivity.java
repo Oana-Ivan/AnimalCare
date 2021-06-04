@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import com.example.animalcare.R;
 import com.example.animalcare.models.Animal;
-import com.example.animalcare.models.Volunteer;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -26,7 +28,7 @@ import static android.content.ContentValues.TAG;
 
 public class AnimalsListActivity extends AppCompatActivity {
     private RecyclerView animalsRV;
-    private VolunteersAdapter animalsAdapter;
+    private AnimalsAdapter animalsAdapter;
     private RecyclerView.LayoutManager animalsLayoutManager;
 
     private ImageView addBtn;
@@ -44,34 +46,62 @@ public class AnimalsListActivity extends AppCompatActivity {
         animalsRV.setHasFixedSize(true);
         animalsLayoutManager = new LinearLayoutManager(this);
 
-        // TODO Retrieve volunteers data from Firestore
+        // TODO Retrieve animals data from Firestore
         db = FirebaseFirestore.getInstance();
         animalsCollection = db.collection("Animals");
+        animalsCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Animal> animals = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Animal currentAnimal = document.toObject(Animal.class);
+                        animals.add(currentAnimal);
+                    }
+                    animalsAdapter = new AnimalsAdapter(animals);
 
-        ArrayList<Animal> animals = new ArrayList<>();
-        Animal currentAnimal1 = new Animal("asdc", 2.0, "FEMALE", "DOG", "SDF", "NEAH", false, 1, 1, "sdc", "swdsc");
-        Animal currentAnimal2 = new Animal("asdc", 2.0, "FEMALE", "DOG", "SDF", "NEAH", false, 1, 1, "sdc", "swdsc");
-        Animal currentAnimal3 = new Animal("asdc", 2.0, "FEMALE", "DOG", "SDF", "NEAH", false, 1, 1, "sdc", "swdsc");
-        animals.add(currentAnimal1);
-        animals.add(currentAnimal2);
-        animals.add(currentAnimal3);
+                    animalsRV.setLayoutManager(animalsLayoutManager);
+                    animalsRV.setAdapter(animalsAdapter);
 
-        AnimalsAdapter animalsAdapter = new AnimalsAdapter(animals);
+                    // click on animal
+                    // TODO Redirect to animal page
+                    animalsAdapter.setOnItemClickListener(position -> {
+                        Toast.makeText(AnimalsListActivity.this, animals.get(position).getSpecies(), Toast.LENGTH_SHORT).show();
+                    //  String usernameToRemove = animals.get(position).getAnimalID();
 
-        animalsRV.setLayoutManager(animalsLayoutManager);
-        animalsRV.setAdapter(animalsAdapter);
+                    });
 
-        // click on animal
-        // TODO Redirect to animal page
-        animalsAdapter.setOnItemClickListener(position -> {
-            Toast.makeText(AnimalsListActivity.this, animals.get(position).getSpecies(), Toast.LENGTH_SHORT).show();
-//            String usernameToRemove = animals.get(position).getAnimalID();
-
+                    Log.d(TAG, animals.toString());
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
         });
+
+//        ArrayList<Animal> animals = new ArrayList<>();
+//        Animal currentAnimal1 = new Animal("asdc", 2.0, "FEMALE", "DOG", "SDF", "NEAH", false, 1, 1, "sdc", "swdsc");
+//        Animal currentAnimal2 = new Animal("asdc", 2.0, "FEMALE", "DOG", "SDF", "NEAH", false, 1, 1, "sdc", "swdsc");
+//        Animal currentAnimal3 = new Animal("asdc", 2.0, "FEMALE", "DOG", "SDF", "NEAH", false, 1, 1, "sdc", "swdsc");
+//        animals.add(currentAnimal1);
+//        animals.add(currentAnimal2);
+//        animals.add(currentAnimal3);
+//
+//        AnimalsAdapter animalsAdapter = new AnimalsAdapter(animals);
+//
+//        animalsRV.setLayoutManager(animalsLayoutManager);
+//        animalsRV.setAdapter(animalsAdapter);
+//
+//        // click on animal
+//        // TODO Redirect to animal page
+//        animalsAdapter.setOnItemClickListener(position -> {
+//            Toast.makeText(AnimalsListActivity.this, animals.get(position).getSpecies(), Toast.LENGTH_SHORT).show();
+////            String usernameToRemove = animals.get(position).getAnimalID();
+//
+//        });
 
         addBtn = findViewById(R.id.activity_animals_list_img_add);
         addBtn.setOnClickListener(r -> {
-            // Redirect to add volunteer
+            // Redirect to add an animal
             startActivity(new Intent(AnimalsListActivity.this, AddAnimalActivity.class));
         });
 
