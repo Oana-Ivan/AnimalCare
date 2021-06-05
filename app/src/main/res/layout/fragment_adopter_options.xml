@@ -6,7 +6,7 @@
     tools:context=".animalsActivities.AdopterOptionsFragment">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/animal_fragment_options_update"
+        android:id="@+id/animal_fragment_options_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
