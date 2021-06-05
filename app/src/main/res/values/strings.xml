@@ -25,6 +25,7 @@
     <string name="actions">Actions</string>
     <string name="see_all_animals">See all animals</string>
     <string name="recommend_animals_for_you">Let us recommend animals for you</string>
+    <string name="recommend_animals_for_you_2">Let us recommend animals for you! Complete the next test!</string>
     <string name="animals_you_saved">Animals you saved</string>
     <string name="volunteer_caps">VOLUNTEER</string>
     <string name="program">Program</string>
@@ -88,4 +89,24 @@
     <string name="update">Update</string>
     <string name="save">Save</string>
     <string name="saved_animals">Saved animals</string>
+    <string name="recommended_animals">Recommended animals</string>
+    <string name="test">Test</string>
+    <string name="previous_results">Previous results</string>
+    <string name="question_1">Question 1</string>
+    <string name="answer_1">Answer 1</string>
+    <string name="answer_2">Answer 2</string>
+    <string name="answer_3">Answer 3</string>
+    <string name="question_2">Question 2</string>
+    <string name="answer_2_1">Answer 1</string>
+    <string name="answer_2_2">Answer 2</string>
+    <string name="answer_2_3">Answer 3</string>
+    <string name="question_3">Question 3</string>
+    <string name="answer_3_1">Answer 1</string>
+    <string name="answer_3_2">Answer 2</string>
+    <string name="answer_3_3">Answer 3</string>
+    <string name="question_4">Question 4</string>
+    <string name="low">Low</string>
+    <string name="high">High</string>
+    <string name="question_5">Question 5</string>
+    <string name="submit">Submit</string>
 </resources>

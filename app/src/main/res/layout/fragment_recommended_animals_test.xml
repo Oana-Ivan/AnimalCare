@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".adopterOptions.recommendedAnimals.RecommendedAnimalsTestFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp" >
+
+        <TextView
+            android:id="@+id/fragment_recommended_main_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:text="@string/test"
+            android:textSize="20sp"
+            android:padding="15dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_recommended_main_tv"
+            app:layout_constraintVertical_bias="0.7">
+
+            <LinearLayout
+                android:id="@+id/fragment_recommended_test_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fragment_rec_test_q1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:paddingTop="5dp"
+                    android:text="@string/question_1"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q1_op1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_1" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q1_op2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_2" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q1_op3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_3" />
+
+                <TextView
+                    android:id="@+id/fragment_rec_test_q2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:paddingTop="5dp"
+                    android:text="@string/question_2"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q2_op1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_2_1" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q2_op2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_2_2" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q2_op3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_2_3" />
+
+
+                <TextView
+                    android:id="@+id/fragment_rec_test_q3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:paddingTop="5dp"
+                    android:text="@string/question_3"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q3_op1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_3_1" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q3_op2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_3_2" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q3_op3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_3_3" />
+
+
+                <TextView
+                    android:id="@+id/fragment_rec_test_q4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:paddingTop="5dp"
+                    android:text="@string/question_4"
+                    android:textSize="20sp" />
+
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q4_a1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/low" />
+
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q4_a2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/medium" />
+
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q4_a3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/high" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/fragment_rec_test_q5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:paddingTop="5dp"
+                    android:text="@string/question_5"
+                    android:textSize="20sp" />
+
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q5_a1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/low" />
+
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q5_a2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/medium" />
+
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q5_a3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/high" />
+                </RadioGroup>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/fragment_rec_test_btn_submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="500dp"
+                    android:background="@drawable/button"
+                    android:gravity="center"
+                    android:text="@string/submit"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
