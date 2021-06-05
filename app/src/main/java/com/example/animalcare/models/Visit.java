@@ -11,6 +11,9 @@ public class Visit {
     private int hour;
     private int minutes;
     private List<String> savedAnimalsID;
+    private String status;
+    public static String STATUS_ON = "ON";
+    public static String STATUS_OFF = "OFF";
 
     public Visit() {
     }
@@ -24,6 +27,7 @@ public class Visit {
         this.hour = hour;
         this.minutes = minutes;
         this.savedAnimalsID = savedAnimalsID;
+        this.status = STATUS_ON;
     }
 
     public String getVisitID() {
@@ -88,5 +92,13 @@ public class Visit {
 
     public void setSavedAnimalsID(List<String> savedAnimalsID) {
         this.savedAnimalsID = savedAnimalsID;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

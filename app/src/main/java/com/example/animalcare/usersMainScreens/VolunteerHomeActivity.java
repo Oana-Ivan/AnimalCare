@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
+import com.example.animalcare.adminAndVolunteerOptions.VisitsListActivity;
 import com.example.animalcare.authentication.LoginActivity;
 import com.example.animalcare.authentication.LoginAdminActivity;
 import com.example.animalcare.authentication.RegisterActivity;
@@ -114,7 +115,7 @@ public class VolunteerHomeActivity extends AppCompatActivity {
                         break;
                     case 2:
                         // Visits
-                        startActivity(new Intent(VolunteerHomeActivity.this, LoginAdminActivity.class));
+                        startActivity(new Intent(VolunteerHomeActivity.this, VisitsListActivity.class));
                         break;
                 }
             }

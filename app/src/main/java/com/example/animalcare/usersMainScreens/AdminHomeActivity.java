@@ -14,6 +14,7 @@ import com.example.animalcare.CRUD.VolunteersListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.SplashScreenActivity;
+import com.example.animalcare.adminAndVolunteerOptions.VisitsListActivity;
 import com.example.animalcare.authentication.LoginActivity;
 import com.example.animalcare.authentication.LoginAdminActivity;
 import com.example.animalcare.authentication.RegisterActivity;
@@ -42,13 +43,6 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         CircleMenu circleMenu = (CircleMenu) findViewById(R.id.activity_admin_home_circle_menu);
         logOut = findViewById(R.id.activity_admin_home_logout);
-
-//        circleMenu.setMainMenu(Color.parseColor("#024E36"), R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground)
-//                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.ic_launcher_foreground)
-//                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.ic_launcher_foreground)
-//                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.ic_launcher_foreground)
-//                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.ic_launcher_foreground)
-//                .setOnMenuSelectedListener(this::openActivity);
 
         circleMenu.setMainMenu(Color.parseColor("#024E36"), R.drawable.dog_home, R.drawable.cancel)
                 .addSubMenu(Color.parseColor("#79BC89"), R.drawable.cat)
@@ -90,7 +84,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                         break;
                     case 3:
                         // Visits
-                        startActivity(new Intent(AdminHomeActivity.this, LoginAdminActivity.class));
+                        startActivity(new Intent(AdminHomeActivity.this, VisitsListActivity.class));
                         break;
                 }
             }
