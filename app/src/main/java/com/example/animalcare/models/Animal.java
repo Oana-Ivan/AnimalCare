@@ -1,6 +1,8 @@
 package com.example.animalcare.models;
 
-public class Animal {
+import java.io.Serializable;
+
+public class Animal implements Serializable {
     // data introduced by user
     private double age;
     private String gender;

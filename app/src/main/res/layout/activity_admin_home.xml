@@ -37,7 +37,8 @@
 
         android:gravity="center"
         android:text="@string/logout"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_admin_home_circle_menu"
-        app:layout_constraintTop_toBottomOf="@+id/activity_admin_home_circle_menu" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

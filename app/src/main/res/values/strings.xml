@@ -80,4 +80,11 @@
     <string name="medium">Medium</string>
     <string name="big">Big</string>
     <string name="tv_upload_pictuare_message">* Press the image above to upload animal picture</string>
+    <string name="animal_informations">Animal informations</string>
+    <string name="options">Options</string>
+    <string name="caring_informations">Caring informations</string>
+    <string name="back_to_all_animals">Back to all animals</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="save">Save</string>
 </resources>

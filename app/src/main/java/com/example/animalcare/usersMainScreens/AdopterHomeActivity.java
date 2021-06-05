@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.authentication.LoginActivity;
@@ -90,7 +91,7 @@ public class AdopterHomeActivity extends AppCompatActivity {
                 startActivity(new Intent(AdopterHomeActivity.this, LoginActivity.class));
                 break;
             case "allAnimals":
-                startActivity(new Intent(AdopterHomeActivity.this, RegisterActivity.class));
+                startActivity(new Intent(AdopterHomeActivity.this, AnimalsListActivity.class));
                 break;
             case "recAnimals":
                 startActivity(new Intent(AdopterHomeActivity.this, LoginAdminActivity.class));

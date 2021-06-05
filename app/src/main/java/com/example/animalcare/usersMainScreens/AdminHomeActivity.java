@@ -86,7 +86,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                         break;
                     case 2:
                         // Shelter Management
-                        startActivity(new Intent(AdminHomeActivity.this, LoginAdminActivity.class));
+                        startActivity(new Intent(AdminHomeActivity.this, LoginActivity.class));
                         break;
                     case 3:
                         // Visits

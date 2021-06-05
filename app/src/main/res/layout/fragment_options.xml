@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".animalsActivities.OptionsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="vertical"
+        >
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/animal_fragment_options_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:background="@drawable/button_light"
+            android:text="@string/delete"
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:layout_marginBottom="20dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/animal_fragment_options_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:background="@drawable/button_light"
+            android:text="@string/update"
+            android:textColor="@color/white"
+            android:padding="5dp" />
+    </LinearLayout>
+</FrameLayout>

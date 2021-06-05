@@ -2,16 +2,21 @@ package com.example.animalcare.CRUD;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.animalcare.R;
+import com.example.animalcare.animalsActivities.AnimalDetailsActivity;
 import com.example.animalcare.models.Animal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,6 +30,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
+import static com.example.animalcare.authentication.RegisterActivity.ADMIN;
+import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
+import static com.example.animalcare.authentication.RegisterActivity.UserRole;
+import static com.example.animalcare.authentication.RegisterActivity.VOLUNTEER;
 
 public class AnimalsListActivity extends AppCompatActivity {
     private RecyclerView animalsRV;
@@ -46,7 +55,7 @@ public class AnimalsListActivity extends AppCompatActivity {
         animalsRV.setHasFixedSize(true);
         animalsLayoutManager = new LinearLayoutManager(this);
 
-        // TODO Retrieve animals data from Firestore
+        // Retrieve animals data from Firestore
         db = FirebaseFirestore.getInstance();
         animalsCollection = db.collection("Animals");
         animalsCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -64,11 +73,12 @@ public class AnimalsListActivity extends AppCompatActivity {
                     animalsRV.setAdapter(animalsAdapter);
 
                     // click on animal
-                    // TODO Redirect to animal page
                     animalsAdapter.setOnItemClickListener(position -> {
                         Toast.makeText(AnimalsListActivity.this, animals.get(position).getSpecies(), Toast.LENGTH_SHORT).show();
-                    //  String usernameToRemove = animals.get(position).getAnimalID();
-
+                        //  String usernameToRemove = animals.get(position).getAnimalID();
+                        Intent intent = new Intent(AnimalsListActivity.this, AnimalDetailsActivity.class);
+                        intent.putExtra("Animal", animals.get(position));
+                        startActivity(intent);
                     });
 
                     Log.d(TAG, animals.toString());
@@ -78,32 +88,24 @@ public class AnimalsListActivity extends AppCompatActivity {
             }
         });
 
-//        ArrayList<Animal> animals = new ArrayList<>();
-//        Animal currentAnimal1 = new Animal("asdc", 2.0, "FEMALE", "DOG", "SDF", "NEAH", false, 1, 1, "sdc", "swdsc");
-//        Animal currentAnimal2 = new Animal("asdc", 2.0, "FEMALE", "DOG", "SDF", "NEAH", false, 1, 1, "sdc", "swdsc");
-//        Animal currentAnimal3 = new Animal("asdc", 2.0, "FEMALE", "DOG", "SDF", "NEAH", false, 1, 1, "sdc", "swdsc");
-//        animals.add(currentAnimal1);
-//        animals.add(currentAnimal2);
-//        animals.add(currentAnimal3);
-//
-//        AnimalsAdapter animalsAdapter = new AnimalsAdapter(animals);
-//
-//        animalsRV.setLayoutManager(animalsLayoutManager);
-//        animalsRV.setAdapter(animalsAdapter);
-//
-//        // click on animal
-//        // TODO Redirect to animal page
-//        animalsAdapter.setOnItemClickListener(position -> {
-//            Toast.makeText(AnimalsListActivity.this, animals.get(position).getSpecies(), Toast.LENGTH_SHORT).show();
-////            String usernameToRemove = animals.get(position).getAnimalID();
-//
-//        });
-
         addBtn = findViewById(R.id.activity_animals_list_img_add);
-        addBtn.setOnClickListener(r -> {
-            // Redirect to add an animal
-            startActivity(new Intent(AnimalsListActivity.this, AddAnimalActivity.class));
-        });
+        // Retrieve userRole from sharedPreferences
+        SharedPreferences sharedpreferences = getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);
+        String userRole = sharedpreferences.getString(UserRole, "");
+
+        // Show addBtn if userRole == ADMIN or VOLUNTEER
+        if (userRole.equals(ADMIN) || userRole.equals(VOLUNTEER)) {
+            addBtn.setVisibility(View.VISIBLE);
+            addBtn.setOnClickListener(r -> {
+                // Redirect to add an animal
+                startActivity(new Intent(AnimalsListActivity.this, AddAnimalActivity.class));
+            });
+        }
+        else {
+            CardView cv = findViewById(R.id.activity_animals_list_cv_add);
+            cv.setVisibility(View.INVISIBLE);
+            addBtn.setVisibility(View.INVISIBLE);
+        }
 
     }
 }
