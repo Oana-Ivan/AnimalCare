@@ -46,9 +46,10 @@ public class AdopterOptionsFragment extends Fragment {
             String username = sharedpreferences.getString(Username, "");
 
             // verify if the animal already exists
-            if (savedAnimalDAO.findByAnimalID(currentAnimal.getAnimalID()) == null) {
+            if (savedAnimalDAO.findByAdopterIDAndAnimalID(username, currentAnimal.getAnimalID()).size() == 0) {
+                int id = savedAnimalDAO.getNoOfSavedAnimals() + 1;
                 // insert new animal
-                SavedAnimal newAnimal = new SavedAnimal(currentAnimal.getAnimalID(), username, currentAnimal.getAge(), currentAnimal.getGender(),
+                SavedAnimal newAnimal = new SavedAnimal(id, currentAnimal.getAnimalID(), username, currentAnimal.getAge(), currentAnimal.getGender(),
                         currentAnimal.getSpecies(), currentAnimal.getColor(), currentAnimal.getDescription(), currentAnimal.hasDisease(),
                         currentAnimal.getImage(), currentAnimal.getArrivingDate(), currentAnimal.getBreed(), currentAnimal.getSize(),
                         currentAnimal.getPersonalityType(), currentAnimal.getAttentionLevelRequired(), currentAnimal.getAttentionLevelRequired());

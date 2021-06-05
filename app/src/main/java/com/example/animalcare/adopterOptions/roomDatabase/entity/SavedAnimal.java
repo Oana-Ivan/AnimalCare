@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "saved_animals")
 public class SavedAnimal {
     @PrimaryKey
+    private int id;
     @NonNull
     @ColumnInfo(name = "animal_id")
     private String animalId;
@@ -31,7 +32,8 @@ public class SavedAnimal {
     private int attentionLevelRequired;
     private int caringLevelRequired;
 
-    public SavedAnimal(String animalId, String adopterID, double age, String gender, String species, String color, String description, boolean disease, String image, String arrivingDate, String breed, int size, int personalityType, int attentionLevelRequired, int caringLevelRequired) {
+    public SavedAnimal(int id, String animalId, String adopterID, double age, String gender, String species, String color, String description, boolean disease, String image, String arrivingDate, String breed, int size, int personalityType, int attentionLevelRequired, int caringLevelRequired) {
+        this.id = id;
         this.animalId = animalId;
         this.adopterID = adopterID;
         this.age = age;
@@ -47,6 +49,14 @@ public class SavedAnimal {
         this.personalityType = personalityType;
         this.attentionLevelRequired = attentionLevelRequired;
         this.caringLevelRequired = caringLevelRequired;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAnimalId() {

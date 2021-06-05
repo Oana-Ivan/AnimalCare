@@ -9,6 +9,7 @@ import androidx.room.Update;
 import com.example.animalcare.adopterOptions.roomDatabase.entity.SavedAnimal;
 import com.example.animalcare.roomDatabase.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -27,6 +28,9 @@ public interface SavedAnimalDAO {
 
     @Query("SELECT * FROM saved_animals WHERE animal_id LIKE :animalID LIMIT 1")
     SavedAnimal findByAnimalID(String animalID);
+
+    @Query("SELECT * FROM saved_animals WHERE adopterID LIKE :adopterID AND animal_id LIKE :animalID LIMIT 1")
+    List<SavedAnimal> findByAdopterIDAndAnimalID(String adopterID, String animalID);
 
     @Insert
     void insertAll(SavedAnimal... saved_animals);
