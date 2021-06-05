@@ -109,4 +109,8 @@
     <string name="high">High</string>
     <string name="question_5">Question 5</string>
     <string name="submit">Submit</string>
+    <string name="add_visit">Add visit</string>
+    <string name="choose_the_date_and_time">Choose the date and time</string>
+    <string name="date">Date (dd/mm/yyyy):</string>
+    <string name="hour">Hour:</string>
 </resources>

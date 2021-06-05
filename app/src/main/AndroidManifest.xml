@@ -15,7 +15,8 @@
         android:roundIcon="@drawable/logo_animal_care"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnimalCare">
-        <activity android:name=".adopterOptions.recommendedAnimals.RecommendedAnimalsActivity"></activity>
+        <activity android:name=".adopterOptions.AddVisitActivity"></activity>
+        <activity android:name=".adopterOptions.recommendedAnimals.RecommendedAnimalsActivity" />
         <activity android:name=".adopterOptions.savedAnimals.SavedAnimalsActivity" />
         <activity android:name=".animalsActivities.AnimalDetailsActivity" />
         <activity

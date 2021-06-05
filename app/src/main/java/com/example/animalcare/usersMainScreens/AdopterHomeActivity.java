@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
+import com.example.animalcare.adopterOptions.AddVisitActivity;
 import com.example.animalcare.adopterOptions.recommendedAnimals.RecommendedAnimalsActivity;
 import com.example.animalcare.adopterOptions.savedAnimals.SavedAnimalsActivity;
 import com.example.animalcare.authentication.LoginActivity;
@@ -90,7 +91,7 @@ public class AdopterHomeActivity extends AppCompatActivity {
         // TODO Add redirect to activities
         switch (activityName) {
             case "schedule":
-                startActivity(new Intent(AdopterHomeActivity.this, LoginActivity.class));
+                startActivity(new Intent(AdopterHomeActivity.this, AddVisitActivity.class));
                 break;
             case "allAnimals":
                 startActivity(new Intent(AdopterHomeActivity.this, AnimalsListActivity.class));

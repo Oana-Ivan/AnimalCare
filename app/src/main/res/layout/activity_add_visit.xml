@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_schema_background_2"
+    tools:context=".adopterOptions.AddVisitActivity">
+
+    <TextView
+        android:id="@+id/activity_add_visit_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/color_schema_main_transparent"
+        android:text="@string/schedule_visit"
+        android:padding="15dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/activity_add_visit_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        android:background="@color/color_schema_background_2_transparent"
+        android:layout_margin="20dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_add_visit_tv"
+        app:layout_constraintVertical_bias="0.3">
+
+        <TextView
+            android:id="@+id/activity_add_visit_tv_date_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/choose_the_date_and_time"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            />
+
+        <TextView
+            android:id="@+id/activity_add_visit_tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/date"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:padding="10dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Spinner
+                android:id="@+id/activity_add_visit_s_choose_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:padding="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <Spinner
+                android:id="@+id/activity_add_visit_s_choose_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:padding="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <Spinner
+                android:id="@+id/activity_add_visit_s_choose_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:padding="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_add_visit_tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/hour"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:padding="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Spinner
+                android:id="@+id/activity_add_visit_s_choose_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:padding="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <Spinner
+                android:id="@+id/activity_add_visit_s_choose_minutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/activity_add_visit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+        android:background="@drawable/button_light"
+        android:gravity="center"
+        android:text="@string/add_visit"
+        android:textColor="@color/white"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_add_visit_ll" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
