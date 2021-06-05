@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.animalcare.R;
 
 public class RecommendedAnimalsActivity extends AppCompatActivity {
+    public static boolean recAnimalsFromTest = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -35,6 +35,7 @@ public class RecommendedAnimalsMainFragment extends Fragment {
         });
 
         btnResults.setOnClickListener(b -> {
+            RecommendedAnimalsActivity.recAnimalsFromTest = false;
             RecommendedAnimalsListFragment resultsFragment = new RecommendedAnimalsListFragment();
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.activity_recommended_animals_fr, resultsFragment);

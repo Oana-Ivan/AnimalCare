@@ -33,6 +33,7 @@ public class RecommendedAnimalsTestFragment extends Fragment {
         submitBtn.setOnClickListener(b -> {
             if (!notAnsweredAllQuestions()) {
                 calculateResults();
+                RecommendedAnimalsActivity.recAnimalsFromTest = true;
                 // Change to fragment Results
                 RecommendedAnimalsListFragment resultsFragment = new RecommendedAnimalsListFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
