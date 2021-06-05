@@ -128,10 +128,10 @@ public class ShelterManagementActivity extends AppCompatActivity {
         });
         // TODO Tickets management
         addTicketBtn.setOnClickListener(c -> {
-            startActivity(new Intent(ShelterManagementActivity.this, VolunteersListActivity.class));
+            startActivity(new Intent(ShelterManagementActivity.this, AddTicketActivity.class));
         });
         viewAllTicketsBtn.setOnClickListener(c -> {
-            startActivity(new Intent(ShelterManagementActivity.this, VolunteersListActivity.class));
+            startActivity(new Intent(ShelterManagementActivity.this, TicketsListActivity.class));
         });
     }
 }

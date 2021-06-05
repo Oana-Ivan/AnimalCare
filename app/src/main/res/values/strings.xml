@@ -121,4 +121,14 @@
     <string name="number_of_visits">Number of visits</string>
     <string name="add_ticket">Add ticket</string>
     <string name="view_tickets">View tickets</string>
+    <string name="volunteer_name">Volunteer</string>
+    <string name="status">Status</string>
+    <string name="ticket_text">Ticket text</string>
+    <string name="set_status_as_close">Set status as close</string>
+    <string name="ticket_title">Ticket title</string>
+    <string name="tickets">Tickets</string>
+    <string name="title">Title</string>
+    <string name="enter_ticket_name">Enter ticket name</string>
+    <string name="text">Text</string>
+    <string name="enter_ticket_text">Enter ticket text</string>
 </resources>
