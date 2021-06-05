@@ -13,24 +13,14 @@ import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.CRUD.VolunteersListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
-import com.example.animalcare.SplashScreenActivity;
 import com.example.animalcare.adminAndVolunteerOptions.VisitsListActivity;
-import com.example.animalcare.authentication.LoginActivity;
-import com.example.animalcare.authentication.LoginAdminActivity;
-import com.example.animalcare.authentication.RegisterActivity;
-import com.example.animalcare.models.Admin;
+import com.example.animalcare.adminAndVolunteerOptions.ShelterManagementActivity;
 import com.hitomi.cmlibrary.CircleMenu;
-import com.hitomi.cmlibrary.OnMenuSelectedListener;
-import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.example.animalcare.authentication.RegisterActivity.ADOPTER;
 import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
-import static com.example.animalcare.authentication.RegisterActivity.UserRole;
-import static com.example.animalcare.authentication.RegisterActivity.Username;
-import static com.example.animalcare.authentication.RegisterActivity.VOLUNTEER;
 
 public class AdminHomeActivity extends AppCompatActivity {
     private TextView logOut;
@@ -63,7 +53,6 @@ public class AdminHomeActivity extends AppCompatActivity {
         });
     }
     private void openActivity(int option) {
-        // TODO Add redirect to activities
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -80,7 +69,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                         break;
                     case 2:
                         // Shelter Management
-                        startActivity(new Intent(AdminHomeActivity.this, LoginActivity.class));
+                        startActivity(new Intent(AdminHomeActivity.this, ShelterManagementActivity.class));
                         break;
                     case 3:
                         // Visits

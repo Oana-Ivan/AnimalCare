@@ -114,4 +114,11 @@
     <string name="date">Date (dd/mm/yyyy):</string>
     <string name="hour">Hour:</string>
     <string name="visits">Visits</string>
+    <string name="shelter_management">Shelter Management</string>
+    <string name="number_of_volunteers">Number of volunteers</string>
+    <string name="number_of_animals">Number of animals</string>
+    <string name="number_of_adopters">Number of adopters</string>
+    <string name="number_of_visits">Number of visits</string>
+    <string name="add_ticket">Add ticket</string>
+    <string name="view_tickets">View tickets</string>
 </resources>

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
+import com.example.animalcare.adminAndVolunteerOptions.ShelterManagementActivity;
 import com.example.animalcare.adminAndVolunteerOptions.VisitsListActivity;
 import com.example.animalcare.authentication.LoginActivity;
 import com.example.animalcare.authentication.LoginAdminActivity;
@@ -98,7 +99,6 @@ public class VolunteerHomeActivity extends AppCompatActivity {
     }
 
     private void openActivity(int option) {
-        // TODO Add redirect to activities
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -111,7 +111,7 @@ public class VolunteerHomeActivity extends AppCompatActivity {
                         break;
                     case 1:
                         // Shelter Management
-                        startActivity(new Intent(VolunteerHomeActivity.this, RegisterActivity.class));
+                        startActivity(new Intent(VolunteerHomeActivity.this, ShelterManagementActivity.class));
                         break;
                     case 2:
                         // Visits

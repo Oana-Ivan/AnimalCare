@@ -88,7 +88,6 @@ public class AdopterHomeActivity extends AppCompatActivity {
     }
 
     private void openActivity(String activityName) {
-        // TODO Add redirect to activities
         switch (activityName) {
             case "schedule":
                 startActivity(new Intent(AdopterHomeActivity.this, AddVisitActivity.class));
