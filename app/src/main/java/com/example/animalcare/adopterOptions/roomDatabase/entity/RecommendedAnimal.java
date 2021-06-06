@@ -22,7 +22,6 @@ public class RecommendedAnimal {
     private boolean disease;
     private String image;
     private String arrivingDate;
-    // TODO Breed
     private String breed;
     // 3 sizes: 1 - small, 2 - medium, 3 - big
     private int size;

@@ -251,11 +251,6 @@ public class AddAnimalActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     progressDialog.dismiss();
                     Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
-
-                    // TODO redirect based on the user role
-//                    Intent intent = new Intent(AddAnimalActivity.this, AdminHomeActivity.class);
-//                    startActivity(intent);
-//                    finish();
                 }
                 else {
                     String error = task.getException().getMessage();

@@ -126,7 +126,6 @@ public class ShelterManagementActivity extends AppCompatActivity {
         visitsTV.setOnClickListener(c -> {
             startActivity(new Intent(ShelterManagementActivity.this, VisitsListActivity.class));
         });
-        // TODO Tickets management
         addTicketBtn.setOnClickListener(c -> {
             startActivity(new Intent(ShelterManagementActivity.this, AddTicketActivity.class));
         });
