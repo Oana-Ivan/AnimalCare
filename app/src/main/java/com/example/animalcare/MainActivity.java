@@ -4,19 +4,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.animalcare.authentication.LoginActivity;
 import com.example.animalcare.authentication.LoginAdminActivity;
 import com.example.animalcare.authentication.RegisterActivity;
+import com.example.animalcare.ml.MobilenetV110224Quant;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
+
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class MainActivity extends AppCompatActivity {
     private AppCompatButton loginBtn;
@@ -35,12 +50,6 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(r -> redirectToActivity("login"));
         registerBtn.setOnClickListener(r -> redirectToActivity("register"));
         loginAdminTV.setOnClickListener(r -> redirectToActivity("loginAdmin"));
-
-//        Realm.init(this);
-//        App app = new App(new AppConfiguration.Builder(appID).build());
-
-        // TODO Different output based on user role
-//        Toast.makeText(MainActivity.this, "Firebase connection Success", Toast.LENGTH_LONG).show();
     }
 
     private void redirectToActivity (String activityName) {

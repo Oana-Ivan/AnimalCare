@@ -60,15 +60,7 @@ public class AnimalsAdapter extends RecyclerView.Adapter<AnimalsAdapter.AnimalsV
         holder.detailsTV.setText(details1);
         holder.detailsTV2.setText(details2);
         holder.detailsTV3.setText(details3);
-        holder.animalImg.setImageResource(R.drawable.paw);
-//        URL url = null;
-//        try {
-//            url = new URL(animal.getImage());
-//            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//            holder.animalImg.setImageBitmap(bmp);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        Glide.with(holder.animalImg.getContext()).load(animal.getImage()).into(holder.animalImg);
     }
 
     @Override

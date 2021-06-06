@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
@@ -43,8 +44,8 @@ public class AnimalDetailsActivity extends AppCompatActivity {
         animalSpeciesTV = findViewById(R.id.activity_animal_details_tv_needs);
         btnAllAnimals = findViewById(R.id.activity_animal_details_btn_all_animals);
 
-        // TODO Set animal image
-//        currentAnimal.getImage();
+        // Set animal image
+        Glide.with(this).load(currentAnimal.getImage()).into(animalImg);
 
         // Set text for information about animal
         String animalInfo1 = currentAnimal.getSpecies();

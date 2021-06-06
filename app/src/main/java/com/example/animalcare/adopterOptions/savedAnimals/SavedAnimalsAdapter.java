@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.animalcare.CRUD.AnimalsAdapter;
 import com.example.animalcare.R;
 import com.example.animalcare.adopterOptions.roomDatabase.entity.SavedAnimal;
@@ -52,15 +53,7 @@ public class SavedAnimalsAdapter extends RecyclerView.Adapter<SavedAnimalsAdapte
         holder.detailsTV.setText(details1);
         holder.detailsTV2.setText(details2);
         holder.detailsTV3.setText(details3);
-        holder.animalImg.setImageResource(R.drawable.paw);
-//        URL url = null;
-//        try {
-//            url = new URL(animal.getImage());
-//            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//            holder.animalImg.setImageBitmap(bmp);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        Glide.with(holder.animalImg.getContext()).load(animal.getImage()).into(holder.animalImg);
     }
 
     @Override

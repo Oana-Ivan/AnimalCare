@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.animalcare.R;
+import com.example.animalcare.ml.MobilenetV110224Quant;
 import com.example.animalcare.models.Animal;
 import com.example.animalcare.usersMainScreens.AdminHomeActivity;
 import com.google.android.gms.tasks.Continuation;
@@ -39,9 +40,20 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.image.TensorImage;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 import id.zelory.compressor.Compressor;
 
@@ -56,12 +68,11 @@ public class AddAnimalActivity extends AppCompatActivity {
 
     private String arrivingDate, age, color, description;
     private double ageD;
-    private String gender, species, animalID, image;
+    private String gender, species, animalID, image, breed = "";
     private boolean disease;
     private int personalityType, size;
 
     // cloud database
-//    private FirebaseFirestore firebaseFirestore;
     public FirebaseFirestore db;
     public CollectionReference animalsCollection;
     private int collectionSize = 0;
@@ -121,7 +132,7 @@ public class AddAnimalActivity extends AppCompatActivity {
                             File newFile = new File(imageUri.getPath());
                             try {
                                 compressed = new Compressor(AddAnimalActivity.this)
-                                        .setMaxHeight(125).setMaxWidth(125)
+                                        .setMaxHeight(224).setMaxWidth(224)
                                         .setQuality(50).compressToBitmap(newFile);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -130,10 +141,42 @@ public class AddAnimalActivity extends AppCompatActivity {
                             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                             compressed.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                             byte[] thumbData = byteArrayOutputStream.toByteArray();
-                            // TODO Generate animalID
+
+
+                            try {
+                                MobilenetV110224Quant model = MobilenetV110224Quant.newInstance(getBaseContext());
+
+                                // Creates inputs for reference.
+                                TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
+                                Bitmap resized = Bitmap.createScaledBitmap(compressed, 224, 224, true);
+                                inputFeature0.loadBuffer(TensorImage.fromBitmap(resized).getBuffer());
+
+                                // Runs model inference and gets result.
+                                MobilenetV110224Quant.Outputs outputs = model.process(inputFeature0);
+                                TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+                                float[] results = outputFeature0.getFloatArray();
+                                float max = 0.0f;
+                                int poz = 0;
+                                for (int i = 0; i < results.length; i++) {
+                                    if (results[i] > max) {
+                                        max = results[i];
+                                        poz = i;
+                                    }
+                                }
+                                String l = get("labels.txt");
+                                String[] labelsArray = l.split("\n");
+                                breed = labelsArray[poz];
+
+                                // Close model
+                                model.close();
+
+                            } catch (IOException e) {
+                                // Handle the exception
+                            }
+
                             UploadTask image_path = storageReference.child("animal_image").child(animalID + ".jpg").putBytes(thumbData);
-        //                    final StorageReference ref = storageRef.child("images/mountains.jpg");
-        //                    uploadTask = ref.putFile(file);
+
                             Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                                 @Override
                                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -150,7 +193,9 @@ public class AddAnimalActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         Uri downloadUri = task.getResult();
                                         image = downloadUri.toString();
+
                                         Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, image);
+                                        newAnimal.setBreed(breed);
 
                                         db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -159,10 +204,10 @@ public class AddAnimalActivity extends AppCompatActivity {
                                                     progressDialog.dismiss();
                                                     Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
 
-                                                    // TODO redirect based on the user role
-        //                    Intent intent = new Intent(AddAnimalActivity.this, AdminHomeActivity.class);
-        //                    startActivity(intent);
-        //                    finish();
+                                                    // Redirect to All animals
+                                                    Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
+                                                    finish();
+                                                    startActivity(intent);
                                                 }
                                                 else {
                                                     String error = task.getException().getMessage();
@@ -178,21 +223,6 @@ public class AddAnimalActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-        //                    image_path.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-        //                        @Override
-        //                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-        //                            if (task.isSuccessful()) {
-        //                                storeAnimalData(task);
-        //
-        //
-        //
-        //                            } else {
-        //                                String error = task.getException().getMessage();
-        //                                Toast.makeText(AddAnimalActivity.this, "(IMAGE Error) : " + error, Toast.LENGTH_LONG).show();
-        //                                progressDialog.dismiss();
-        //                            }
-        //                        }
-        //                    });
                         }
                     }
                 });
@@ -206,20 +236,12 @@ public class AddAnimalActivity extends AppCompatActivity {
     private void storeAnimalData(Task<UploadTask.TaskSnapshot> task) {
         Uri download_uri;
         if (task != null) {
-//            download_uri = task.getResult().getDownloadUrl(); // getDownloadUrl();
-//            download_uri = task.getResult().getStorage().getDownloadUrl().; // getDownloadUrl();
-            download_uri = task.getResult().getStorage().getDownloadUrl().getResult(); // getDownloadUrl();
+            download_uri = task.getResult().getStorage().getDownloadUrl().getResult();
         }
         else {
             download_uri = imageUri;
         }
 
-
-//        Map<String, String> userData = new HashMap<>();
-//        userData.put("userName",username);
-//        userData.put("userPhone",userphone);
-//        userData.put("userAddress",useradress);
-//        userData.put("userImage",download_uri.toString());
         image = download_uri.toString();
         Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, image);
 
@@ -245,18 +267,6 @@ public class AddAnimalActivity extends AppCompatActivity {
         });
 
     }
-
-//        addAnimalBtn.setOnClickListener(a -> {
-//            assignData();
-//
-//            if (!emptyFields() && radioSelected()) {
-//                // TODO Insert in database
-//                // TODO animalID si img
-//                Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, image);
-//            }
-//        });
-
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -313,8 +323,6 @@ public class AddAnimalActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         animalsCollection = db.collection("Animals");
         storageReference = FirebaseStorage.getInstance().getReference();
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        user_id = firebaseAuth.getCurrentUser().getUid();
     }
 
 
@@ -351,5 +359,19 @@ public class AddAnimalActivity extends AppCompatActivity {
         bigRB = findViewById(R.id.activity_add_animal_rb_big);
         diseaseCB = findViewById(R.id.activity_add_animal_cb_disease);
         addAnimalBtn = findViewById(R.id.activity_add_animal_btn_add);
+    }
+    public String get(String fileName) {
+        InputStream is = null;
+        try {
+            is = getApplication().getAssets().open(fileName);
+            int lenght = is.available();
+            byte[] buffer = new byte[lenght];
+            is.read(buffer);
+            String result = new String(buffer, "utf8");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
