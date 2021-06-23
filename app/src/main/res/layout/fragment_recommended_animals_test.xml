@@ -42,6 +42,27 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/fragment_rec_test_q0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:paddingTop="5dp"
+                    android:text="@string/question_0"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q0_op1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_0_1" />
+
+                <CheckBox
+                    android:id="@+id/fragment_rec_test_q0_op2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/answer_0_2" />
+
+                <TextView
                     android:id="@+id/fragment_rec_test_q1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -50,23 +71,29 @@
                     android:text="@string/question_1"
                     android:textSize="20sp" />
 
-                <CheckBox
-                    android:id="@+id/fragment_rec_test_q1_op1"
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/answer_1" />
+                    android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/fragment_rec_test_q1_op2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/answer_2" />
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q1_op1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/answer_1" />
 
-                <CheckBox
-                    android:id="@+id/fragment_rec_test_q1_op3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/answer_3" />
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q1_op2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/answer_2" />
+
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q1_op3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/answer_3" />
+                </RadioGroup>
 
                 <TextView
                     android:id="@+id/fragment_rec_test_q2"
@@ -77,24 +104,23 @@
                     android:text="@string/question_2"
                     android:textSize="20sp" />
 
-                <CheckBox
-                    android:id="@+id/fragment_rec_test_q2_op1"
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/answer_2_1" />
+                    android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/fragment_rec_test_q2_op2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/answer_2_2" />
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q2_op1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/answer_2_1" />
 
-                <CheckBox
-                    android:id="@+id/fragment_rec_test_q2_op3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/answer_2_3" />
-
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q2_op2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/answer_2_2" />
+                </RadioGroup>
 
                 <TextView
                     android:id="@+id/fragment_rec_test_q3"
@@ -105,23 +131,29 @@
                     android:text="@string/question_3"
                     android:textSize="20sp" />
 
-                <CheckBox
-                    android:id="@+id/fragment_rec_test_q3_op1"
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/answer_3_1" />
+                    android:orientation="vertical">
 
-                <CheckBox
-                    android:id="@+id/fragment_rec_test_q3_op2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/answer_3_2" />
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q3_op1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/answer_3_1" />
 
-                <CheckBox
-                    android:id="@+id/fragment_rec_test_q3_op3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/answer_3_3" />
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q3_op2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/answer_3_2" />
+
+                    <RadioButton
+                        android:id="@+id/fragment_rec_test_q3_op3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/answer_3_3" />
+                </RadioGroup>
 
 
                 <TextView
@@ -133,7 +165,6 @@
                     android:text="@string/question_4"
                     android:textSize="20sp" />
 
-
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -143,19 +174,19 @@
                         android:id="@+id/fragment_rec_test_q4_a1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/low" />
+                        android:text="@string/answer_4_1" />
 
                     <RadioButton
                         android:id="@+id/fragment_rec_test_q4_a2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/medium" />
+                        android:text="@string/answer_4_2" />
 
                     <RadioButton
                         android:id="@+id/fragment_rec_test_q4_a3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/high" />
+                        android:text="@string/answer_4_3" />
                 </RadioGroup>
 
                 <TextView
@@ -167,7 +198,6 @@
                     android:text="@string/question_5"
                     android:textSize="20sp" />
 
-
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -177,19 +207,14 @@
                         android:id="@+id/fragment_rec_test_q5_a1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/low" />
+                        android:text="@string/answer_5_1" />
 
                     <RadioButton
                         android:id="@+id/fragment_rec_test_q5_a2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/medium" />
+                        android:text="@string/answer_5_2" />
 
-                    <RadioButton
-                        android:id="@+id/fragment_rec_test_q5_a3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/high" />
                 </RadioGroup>
 
                 <androidx.appcompat.widget.AppCompatButton

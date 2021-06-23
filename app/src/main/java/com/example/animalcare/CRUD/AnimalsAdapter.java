@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.example.animalcare.models.Volunteer;
 import com.google.android.material.transition.Hold;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -41,6 +43,12 @@ public class AnimalsAdapter extends RecyclerView.Adapter<AnimalsAdapter.AnimalsV
         this.animalsList = animalsList;
     }
 
+    // method for filtering our recyclerview items.
+    public void filterList(ArrayList<Animal> filterList) {
+        animalsList = filterList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public AnimalsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,7 +68,16 @@ public class AnimalsAdapter extends RecyclerView.Adapter<AnimalsAdapter.AnimalsV
         holder.detailsTV.setText(details1);
         holder.detailsTV2.setText(details2);
         holder.detailsTV3.setText(details3);
-        Glide.with(holder.animalImg.getContext()).load(animal.getImage()).into(holder.animalImg);
+
+        RequestOptions myOptions = new RequestOptions()
+                .override(100, 100);
+        Glide.with(holder.animalImg.getContext())
+                .asBitmap()
+                .apply(myOptions)
+                .load(animal.getImage())
+                .into(holder.animalImg);
+
+//        Glide.with(holder.animalImg.getContext()).load(animal.getImage()).into(holder.animalImg);
     }
 
     @Override
@@ -72,6 +89,7 @@ public class AnimalsAdapter extends RecyclerView.Adapter<AnimalsAdapter.AnimalsV
     public class AnimalsViewHolder extends RecyclerView.ViewHolder {
         public TextView detailsTV, detailsTV2, detailsTV3;
         public ImageView animalImg;
+        public LinearLayout item;
 
         public AnimalsViewHolder(@NonNull View itemView, AnimalsAdapter.OnItemClickListener listener) {
             super(itemView);
@@ -79,6 +97,7 @@ public class AnimalsAdapter extends RecyclerView.Adapter<AnimalsAdapter.AnimalsV
             detailsTV2 = itemView.findViewById(R.id.animal_item_details_2);
             detailsTV3 = itemView.findViewById(R.id.animal_item_details_3);
             animalImg = itemView.findViewById(R.id.animal_item_img);
+            item = itemView.findViewById(R.id.animal_item_ll);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {

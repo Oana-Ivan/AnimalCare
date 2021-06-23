@@ -98,7 +98,7 @@ public class AddVisitActivity extends AppCompatActivity {
         minutesS = findViewById(R.id.activity_add_visit_s_choose_minutes);
         addVisitBtn = findViewById(R.id.activity_add_visit_btn);
 
-        day = new String[]{"1", "2", "3", "4", "5"};
+        day = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
         month = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
         year = new String[]{"2021", "2022", "2023"};
         hour = new String[]{"9", "10", "11", "12", "13", "14", "15", "16", "17"};

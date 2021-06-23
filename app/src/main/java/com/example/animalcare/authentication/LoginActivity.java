@@ -66,8 +66,10 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString(UserRole, VOLUNTEER);
                                     editor.apply();
 
-                                    // Redirect to volunteer page
-                                    startActivity(new Intent(LoginActivity.this, VolunteerHomeActivity.class));
+                                    // Redirect to volunteer page and clear activity stack
+                                    Intent intent = new Intent(LoginActivity.this, VolunteerHomeActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
 
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Wrong credentials", Toast.LENGTH_LONG).show();
@@ -98,8 +100,10 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString(UserRole, ADOPTER);
                                     editor.apply();
 
-                                    // Redirect to user page
-                                    startActivity(new Intent(LoginActivity.this, AdopterHomeActivity.class));
+                                    // Redirect to user page and clear activity stack
+                                    Intent intent = new Intent(LoginActivity.this, AdopterHomeActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Wrong credentials", Toast.LENGTH_LONG).show();
                                 }

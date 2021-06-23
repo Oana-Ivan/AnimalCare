@@ -39,8 +39,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static com.example.animalcare.adopterOptions.recommendedAnimals.RecommendedAnimalsTestFragment.attention;
+import static com.example.animalcare.adopterOptions.recommendedAnimals.RecommendedAnimalsTestFragment.caring;
+import static com.example.animalcare.adopterOptions.recommendedAnimals.RecommendedAnimalsTestFragment.wantsCat;
+import static com.example.animalcare.adopterOptions.recommendedAnimals.RecommendedAnimalsTestFragment.wantsDog;
 import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
 import static com.example.animalcare.authentication.RegisterActivity.Username;
+import static com.example.animalcare.models.Animal.CAT;
+import static com.example.animalcare.models.Animal.DOG;
 
 public class RecommendedAnimalsListFragment extends Fragment {
     private RecyclerView animalsRV;
@@ -88,13 +94,19 @@ public class RecommendedAnimalsListFragment extends Fragment {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Animal currentAnimal = document.toObject(Animal.class);
                             // TODO Add only the items corresponding to the test
-                            animals.add(currentAnimal);
-                            int id = recommendedAnimalDAO.getNoOfRecommendedAnimals() + 1;
-                            RecommendedAnimal recAnimal = new RecommendedAnimal(id, currentAnimal.getAnimalID(), username, currentAnimal.getAge(), currentAnimal.getGender(),
-                                    currentAnimal.getSpecies(), currentAnimal.getColor(), currentAnimal.getDescription(), currentAnimal.hasDisease(),
-                                    currentAnimal.getImage(), currentAnimal.getArrivingDate(), currentAnimal.getBreed(), currentAnimal.getSize(),
-                                    currentAnimal.getPersonalityType(), currentAnimal.getAttentionLevelRequired(), currentAnimal.getAttentionLevelRequired());
-                            recommendedAnimalDAO.insertAll(recAnimal);
+
+                            if (currentAnimal.getAttentionLevelRequired() <= attention
+                                    && currentAnimal.getCaringLevelRequired() <= caring
+                                    && ((currentAnimal.getSpecies().equals(DOG) && wantsDog)
+                                        || (currentAnimal.getSpecies().equals(CAT) && wantsCat))) {
+                                animals.add(currentAnimal);
+                                int id = recommendedAnimalDAO.getNoOfRecommendedAnimals() + 1;
+                                RecommendedAnimal recAnimal = new RecommendedAnimal(id, currentAnimal.getAnimalID(), username, currentAnimal.getAge(), currentAnimal.getGender(),
+                                        currentAnimal.getSpecies(), currentAnimal.getColor(), currentAnimal.getDescription(), currentAnimal.hasDisease(),
+                                        currentAnimal.getImage(), currentAnimal.getArrivingDate(), currentAnimal.getBreed(), currentAnimal.getSize(),
+                                        currentAnimal.getPersonalityType(), currentAnimal.getAttentionLevelRequired(), currentAnimal.getAttentionLevelRequired());
+                                recommendedAnimalDAO.insertAll(recAnimal);
+                            }
                         }
 
                         animalsAdapter = new AnimalsAdapter(animals);

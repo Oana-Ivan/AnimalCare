@@ -99,8 +99,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 editor.putString(UserRole, ADOPTER);
                                 editor.apply();
 
-                                // Redirect to user activity
-                                startActivity(new Intent(RegisterActivity.this, AdopterHomeActivity.class));
+                                // Redirect to user activity and clear activity stack
+                                Intent intent = new Intent(new Intent(RegisterActivity.this, AdopterHomeActivity.class));
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
                             }
                         }
                     } else {

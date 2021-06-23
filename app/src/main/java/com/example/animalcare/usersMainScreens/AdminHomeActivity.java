@@ -35,10 +35,10 @@ public class AdminHomeActivity extends AppCompatActivity {
         logOut = findViewById(R.id.activity_admin_home_logout);
 
         circleMenu.setMainMenu(Color.parseColor("#024E36"), R.drawable.dog_home, R.drawable.cancel)
-                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.cat)
-                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.contact)
-                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.home)
-                .addSubMenu(Color.parseColor("#79BC89"), R.drawable.clock)
+                .addSubMenu(Color.parseColor("#86C194"), R.drawable.cat)
+                .addSubMenu(Color.parseColor("#86C194"), R.drawable.contact)
+                .addSubMenu(Color.parseColor("#86C194"), R.drawable.home)
+                .addSubMenu(Color.parseColor("#86C194"), R.drawable.clock)
                 .setOnMenuSelectedListener(this::openActivity);
 
         logOut.setOnClickListener(r -> {
@@ -57,7 +57,6 @@ public class AdminHomeActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                finish();
                 switch (option) {
                     case 0:
                         // Animals

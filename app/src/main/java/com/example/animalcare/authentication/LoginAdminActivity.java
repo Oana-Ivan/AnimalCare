@@ -53,8 +53,9 @@ public class LoginAdminActivity extends AppCompatActivity {
                 editor.putString(UserRole, ADMIN);
                 editor.apply();
 
-                // Redirect to admin page
+                // Redirect to admin page and clear activity stack
                 Intent intent = new Intent(LoginAdminActivity.this, AdminHomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
             else {

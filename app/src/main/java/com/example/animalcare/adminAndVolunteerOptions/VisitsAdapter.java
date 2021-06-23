@@ -38,7 +38,7 @@ public class VisitsAdapter extends RecyclerView.Adapter<VisitsAdapter.VisitsView
 
         String adopterName = currentVisit.getAdopterUsername();
         String date = "Date: " + currentVisit.getDay() + "." + currentVisit.getMonth() + "." + currentVisit.getYear();
-        String time = "Time: " + currentVisit.getHour() + "." + currentVisit.getMinutes();
+        String time = "Time: " + currentVisit.getHour() + ":" + currentVisit.getMinutes();
 
         holder.nameTV.setText(adopterName);
         holder.dateTV.setText(date);

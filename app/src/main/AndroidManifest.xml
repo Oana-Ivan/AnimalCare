@@ -15,7 +15,7 @@
         android:roundIcon="@drawable/logo_animal_care"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnimalCare">
-        <activity android:name=".adminAndVolunteerOptions.TicketsListActivity"></activity>
+        <activity android:name=".adminAndVolunteerOptions.TicketsListActivity" />
         <activity android:name=".adminAndVolunteerOptions.AddTicketActivity" />
         <activity android:name=".adminAndVolunteerOptions.ShelterManagementActivity" />
         <activity android:name=".adminAndVolunteerOptions.VisitsListActivity" />

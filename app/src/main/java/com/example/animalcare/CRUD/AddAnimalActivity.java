@@ -144,32 +144,35 @@ public class AddAnimalActivity extends AppCompatActivity {
 
 
                             try {
-                                MobilenetV110224Quant model = MobilenetV110224Quant.newInstance(getBaseContext());
 
-                                // Creates inputs for reference.
-                                TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
-                                Bitmap resized = Bitmap.createScaledBitmap(compressed, 224, 224, true);
-                                inputFeature0.loadBuffer(TensorImage.fromBitmap(resized).getBuffer());
+                                // Resize image
+                                Bitmap animalImgResized = Bitmap.createScaledBitmap(compressed, 224, 224, true);
+
+
+                                MobilenetV110224Quant modelBreeds = MobilenetV110224Quant.newInstance(getBaseContext());
+                                TensorBuffer inputImage = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
+                                inputImage.loadBuffer(TensorImage.fromBitmap(animalImgResized).getBuffer());
 
                                 // Runs model inference and gets result.
-                                MobilenetV110224Quant.Outputs outputs = model.process(inputFeature0);
-                                TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+                                MobilenetV110224Quant.Outputs outputs = modelBreeds.process(inputImage);
+                                TensorBuffer breeds = outputs.getOutputFeature0AsTensorBuffer();
 
-                                float[] results = outputFeature0.getFloatArray();
-                                float max = 0.0f;
-                                int poz = 0;
-                                for (int i = 0; i < results.length; i++) {
-                                    if (results[i] > max) {
-                                        max = results[i];
-                                        poz = i;
-                                    }
-                                }
-                                String l = get("labels.txt");
-                                String[] labelsArray = l.split("\n");
-                                breed = labelsArray[poz];
+                                float[] results = breeds.getFloatArray();
+                                breed = getMaxBreed(results);
+
+//                                float max = 0.0f;
+//                                int poz = 0;
+//                                for (int i = 0; i < results.length; i++) {
+//                                    if (results[i] > max) {
+//                                        max = results[i];
+//                                        poz = i;
+//                                    }
+//                                }
+//                                String l = get("labels.txt");
+//                                String[] labelsArray = l.split("\n");
 
                                 // Close model
-                                model.close();
+                                modelBreeds.close();
 
                             } catch (IOException e) {
                                 // Handle the exception
@@ -231,6 +234,20 @@ public class AddAnimalActivity extends AppCompatActivity {
                 collectionSize = 0;
             }
         });
+    }
+
+    private String getMaxBreed(float[] results) {
+        float max = 0.0f;
+        int poz = 0;
+        for (int i = 0; i < results.length; i++) {
+            if (results[i] > max) {
+                max = results[i];
+                poz = i;
+            }
+        }
+        String l = get("labels.txt");
+        String[] labelsArray = l.split("\n");
+        return labelsArray[poz];
     }
 
     private void storeAnimalData(Task<UploadTask.TaskSnapshot> task) {
