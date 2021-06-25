@@ -63,7 +63,7 @@ public class AnimalsAdapter extends RecyclerView.Adapter<AnimalsAdapter.AnimalsV
 
         String details1 = animal.getSpecies() + ", " + (animal.getGender().equals(Animal.FEMALE) ? "F" : "M") + ", " + animal.getAge() + " years, size: " + ((animal.getSize() == 1) ? "small" : ((animal.getSize() == 2) ? "medium" : "big"));
         String details2 = "Personality: " + ((animal.getPersonalityType() == 1) ? "inactive" : ((animal.getPersonalityType() == 2) ? "medium" : "active"));
-        String details3 = "Caring level required: " + ((animal.getAttentionLevelRequired() == 1) ? "small" : ((animal.getAttentionLevelRequired() == 2) ? "medium" : "high"));
+        String details3 = "Caring level required: " + ((animal.getCaringLevelRequired() == 1) ? "small" : ((animal.getCaringLevelRequired() == 2) ? "medium" : "high"));
 
         holder.detailsTV.setText(details1);
         holder.detailsTV2.setText(details2);

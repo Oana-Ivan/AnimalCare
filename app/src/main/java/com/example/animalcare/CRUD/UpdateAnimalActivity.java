@@ -237,7 +237,7 @@ public class UpdateAnimalActivity extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
                 Animal animal = document.toObject(Animal.class);
                 if (animal != null) {
-                    arrivingDateET.setText("TODO");
+                    arrivingDateET.setText(animal.getArrivingDate());
                     ageET.setText(String.valueOf(animal.getAge()));
                     colorET.setText(animal.getColor());
                     descriptionET.setText(animal.getDescription());

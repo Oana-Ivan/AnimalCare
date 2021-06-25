@@ -143,4 +143,6 @@
     <string name="update_animal_info">Update Animal Details</string>
     <string name="tv_change_picture_message">*Press the image above to change animal picture</string>
     <string name="mark_as_unavailable">Mark as unavailable</string>
+    <string name="animal_unavailable">This animal is no longer available in the shelter.</string>
+    <string name="other_info">Other info</string>
 </resources>

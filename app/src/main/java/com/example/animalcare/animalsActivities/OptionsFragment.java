@@ -66,8 +66,8 @@ public class OptionsFragment extends Fragment {
             String animalID = sharedpreferences.getString(currentAnimalID, "");
 
             AlertDialog dialog = new AlertDialog.Builder(getContext())
-                    .setTitle("Are you sure you want to delete this animal?")
-                    .setMessage("")
+                    .setTitle("Remove animal")
+                    .setMessage("Are you sure you want to remove this animal from the shelter database?")
                     .setPositiveButton("Yes", (dialog1, which) -> {
                         // Code to delete from FireStore
 //                            animalsCollection.document(animalID)
@@ -101,7 +101,7 @@ public class OptionsFragment extends Fragment {
                                             .set(animal)
                                             .addOnCompleteListener(task1 -> {
                                                 if (task1.isSuccessful()) {
-                                                    Toast.makeText(getContext(), "Animal deleted " + animal.getWasAdopted(), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getContext(), "Animal removed " + animal.getWasAdopted(), Toast.LENGTH_SHORT).show();
 
                                                     getActivity().finish();
                                                     startActivity(new Intent(getContext(), AnimalsListActivity.class));

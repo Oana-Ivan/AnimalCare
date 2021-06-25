@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +25,7 @@ import static com.example.animalcare.authentication.RegisterActivity.VOLUNTEER;
 public class AnimalDetailsActivity extends AppCompatActivity {
     private Animal currentAnimal;
     private ImageView animalImg;
-    private TextView animalInfoTV1, animalInfoTV2, caringInfoTV, animalSpeciesTV;
+    private TextView animalInfoTV1, animalInfoTV2, animalInfoTV3, caringInfoTV, animalSpeciesTV, availabilityTV;
     private AppCompatButton btnAllAnimals;
 
     public static final String CurrentAnimal = "CurrentAnimal";
@@ -46,8 +47,10 @@ public class AnimalDetailsActivity extends AppCompatActivity {
         animalImg = findViewById(R.id.activity_animal_details_img);
         animalInfoTV1 = findViewById(R.id.activity_animal_details_tv_info_1);
         animalInfoTV2 = findViewById(R.id.activity_animal_details_tv_info_2);
+        animalInfoTV3 = findViewById(R.id.activity_animal_details_tv_info_3);
         caringInfoTV = findViewById(R.id.activity_animal_details_tv_caring_informations);
         animalSpeciesTV = findViewById(R.id.activity_animal_details_tv_needs);
+        availabilityTV = findViewById(R.id.activity_animal_details_tv_availability);
         btnAllAnimals = findViewById(R.id.activity_animal_details_btn_all_animals);
 
         // Set animal image
@@ -65,10 +68,20 @@ public class AnimalDetailsActivity extends AppCompatActivity {
                 + ( (currentAnimal.getBreed() != null) ? "\nBreed: " + currentAnimal.getBreed() : "")
                 + "\nDescription: " + currentAnimal.getDescription()
                 + "\nPersonality: " + ((currentAnimal.getPersonalityType() == 1) ? "inactive" : ((currentAnimal.getPersonalityType() == 2) ? "medium" : "active"))
-                + "\nCaring level required: " + ((currentAnimal.getAttentionLevelRequired() == 1) ? "small" : ((currentAnimal.getAttentionLevelRequired() == 2) ? "medium" : "high"))
-                +  (currentAnimal.getDisease() ? "\n\"Suspected of disease" : "\nHealthy");
+                + "\nCaring level required: " + ((currentAnimal.getCaringLevelRequired() == 1) ? "small" : ((currentAnimal.getCaringLevelRequired() == 2) ? "medium" : "high"))
+                +  (currentAnimal.getDisease() ? "\nSuspected of disease" : "\nHealthy");
         animalInfoTV1.setText(animalInfo1);
         animalInfoTV2.setText(animalInfo2);
+
+        // Set other information
+        String animalInfo3 = "Arriving date: " + currentAnimal.getArrivingDate() + "\nColor: " + currentAnimal.getColor()
+                + "\nAttention level required: " + ((currentAnimal.getAttentionLevelRequired() == 1) ? "small" : ((currentAnimal.getAttentionLevelRequired() == 2) ? "medium" : "high"));
+        animalInfoTV3.setText(animalInfo3);
+
+        // Set availability
+        if (currentAnimal.getWasAdopted()) {
+            availabilityTV.setVisibility(View.VISIBLE);
+        }
 
         // Retrieve userRole from sharedPreferences
         SharedPreferences sharedpreferences = getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);
@@ -83,24 +96,37 @@ public class AnimalDetailsActivity extends AppCompatActivity {
         }
 
         // Show caring information based on animal characteristics
+
+        String needs = (currentAnimal.getSpecies().equals(Animal.DOG) ? "Dog needs" : "Cat needs");
+        animalSpeciesTV.setText(needs);
+
         String caringInfo = "";
         // TODO Add facts about animal
         if (currentAnimal.getSpecies().equals(Animal.DOG)) {
-            caringInfo += "- Food and water;\n - Places to sleep\n - Exercise\n - Basic supplies\n - Grooming\n";
-            if (currentAnimal.getAge() < 1) {
-                caringInfo += "A junior dog will require more attention\n";
+            caringInfo += "BASIC\n - Food and water;\n - Places to sleep\n - Exercise\n - Basic supplies\n - Grooming\n";
+            if (currentAnimal.getAge() <= 1) {
+                caringInfo += "\nBASED ON AGE\nA junior dog will require more attention, it will have a lot of energy and will require more checkups to the veterinarian\n";
             }
-            else caringInfo += ""; //"old\n";
+            else caringInfo += "\nBASED ON AGE\n"; //"old\n";
         }
         else {
-            caringInfo += "pisi\n";
+            caringInfo += "BASIC\n - Food and water;\n - Places to sleep\n - Basic supplies\n";
             if (currentAnimal.getAge() < 1) {
-                caringInfo += "junior\n";
+                caringInfo += "\nBASED ON AGE\nA junior cat will require more attention, it will have a lot of energy and will require more checkups to the veterinarian\n";
             }
-            else caringInfo += ""; //"old\n";
+            else caringInfo += "\nBASED ON AGE\n"; //"old\n";
         }
-        String needs = (currentAnimal.getSpecies().equals(Animal.DOG) ? "Dog needs" : "Cat needs");
-        animalSpeciesTV.setText(needs);
+
+        if (currentAnimal.getDisease()) {
+            caringInfo += "\nILLNESSES\nYou need to be prepared to  \n";
+        }
+
+        if (currentAnimal.getAttentionLevelRequired() == 1) {
+            caringInfo += "\nREQUIRED ATTENTION\nThis animal will probable require little attention";
+        } else if (currentAnimal.getAttentionLevelRequired() == 3) {
+            caringInfo += "\nREQUIRED ATTENTION\nThis animal will probable require a lot of attention";
+        }
+
         caringInfoTV.setText(caringInfo);
 
         // Redirect to All animals
