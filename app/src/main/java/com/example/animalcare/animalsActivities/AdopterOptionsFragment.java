@@ -50,7 +50,7 @@ public class AdopterOptionsFragment extends Fragment {
                 int id = savedAnimalDAO.getNoOfSavedAnimals() + 1;
                 // insert new animal
                 SavedAnimal newAnimal = new SavedAnimal(id, currentAnimal.getAnimalID(), username, currentAnimal.getAge(), currentAnimal.getGender(),
-                        currentAnimal.getSpecies(), currentAnimal.getColor(), currentAnimal.getDescription(), currentAnimal.hasDisease(),
+                        currentAnimal.getSpecies(), currentAnimal.getColor(), currentAnimal.getDescription(), currentAnimal.getDisease(),
                         currentAnimal.getImage(), currentAnimal.getArrivingDate(), currentAnimal.getBreed(), currentAnimal.getSize(),
                         currentAnimal.getPersonalityType(), currentAnimal.getAttentionLevelRequired(), currentAnimal.getAttentionLevelRequired());
 

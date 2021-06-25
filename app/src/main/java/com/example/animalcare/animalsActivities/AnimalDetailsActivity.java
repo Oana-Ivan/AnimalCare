@@ -13,15 +13,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.animalcare.CRUD.AnimalsListActivity;
-import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
-import com.example.animalcare.SplashScreenActivity;
 import com.example.animalcare.models.Animal;
 
 import static com.example.animalcare.authentication.RegisterActivity.ADMIN;
 import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
 import static com.example.animalcare.authentication.RegisterActivity.UserRole;
-import static com.example.animalcare.authentication.RegisterActivity.Username;
 import static com.example.animalcare.authentication.RegisterActivity.VOLUNTEER;
 
 public class AnimalDetailsActivity extends AppCompatActivity {
@@ -64,7 +61,7 @@ public class AnimalDetailsActivity extends AppCompatActivity {
                 + "\nDescription: " + currentAnimal.getDescription()
                 + "\nPersonality: " + ((currentAnimal.getPersonalityType() == 1) ? "inactive" : ((currentAnimal.getPersonalityType() == 2) ? "medium" : "active"))
                 + "\nCaring level required: " + ((currentAnimal.getAttentionLevelRequired() == 1) ? "small" : ((currentAnimal.getAttentionLevelRequired() == 2) ? "medium" : "high"))
-                +  (currentAnimal.hasDisease() ? "\n\"Suspected of disease" : "\nHealthy");
+                +  (currentAnimal.getDisease() ? "\n\"Suspected of disease" : "\nHealthy");
         animalInfoTV1.setText(animalInfo1);
         animalInfoTV2.setText(animalInfo2);
 

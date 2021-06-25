@@ -1,6 +1,5 @@
 package com.example.animalcare.CRUD;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
@@ -17,7 +16,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,9 +26,6 @@ import com.bumptech.glide.Glide;
 import com.example.animalcare.R;
 import com.example.animalcare.ml.MobilenetV110224Quant;
 import com.example.animalcare.models.Animal;
-import com.example.animalcare.models.Volunteer;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -291,7 +286,7 @@ public class UpdateAnimalActivity extends AppCompatActivity {
                         bigRB.setChecked(true);
                     }
 
-                    diseaseCB.setChecked(animal.hasDisease());
+                    diseaseCB.setChecked(animal.getDisease());
 
                     // Set animal image
                     if (animal.getImage() != null) {

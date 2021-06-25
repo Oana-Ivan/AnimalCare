@@ -18,14 +18,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.animalcare.CRUD.AnimalsAdapter;
-import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.adopterOptions.roomDatabase.AdopterOptionsDatabase;
 import com.example.animalcare.adopterOptions.roomDatabase.dao.RecommendedAnimalDAO;
-import com.example.animalcare.adopterOptions.roomDatabase.dao.SavedAnimalDAO;
 import com.example.animalcare.adopterOptions.roomDatabase.entity.RecommendedAnimal;
-import com.example.animalcare.adopterOptions.roomDatabase.entity.SavedAnimal;
-import com.example.animalcare.adopterOptions.savedAnimals.SavedAnimalsAdapter;
 import com.example.animalcare.animalsActivities.AnimalDetailsActivity;
 import com.example.animalcare.models.Animal;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -102,7 +98,7 @@ public class RecommendedAnimalsListFragment extends Fragment {
                                 animals.add(currentAnimal);
                                 int id = recommendedAnimalDAO.getNoOfRecommendedAnimals() + 1;
                                 RecommendedAnimal recAnimal = new RecommendedAnimal(id, currentAnimal.getAnimalID(), username, currentAnimal.getAge(), currentAnimal.getGender(),
-                                        currentAnimal.getSpecies(), currentAnimal.getColor(), currentAnimal.getDescription(), currentAnimal.hasDisease(),
+                                        currentAnimal.getSpecies(), currentAnimal.getColor(), currentAnimal.getDescription(), currentAnimal.getDisease(),
                                         currentAnimal.getImage(), currentAnimal.getArrivingDate(), currentAnimal.getBreed(), currentAnimal.getSize(),
                                         currentAnimal.getPersonalityType(), currentAnimal.getAttentionLevelRequired(), currentAnimal.getAttentionLevelRequired());
                                 recommendedAnimalDAO.insertAll(recAnimal);

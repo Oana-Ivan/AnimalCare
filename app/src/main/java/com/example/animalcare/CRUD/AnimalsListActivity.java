@@ -72,7 +72,9 @@ public class AnimalsListActivity extends AppCompatActivity {
                     animals = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Animal currentAnimal = document.toObject(Animal.class);
-                        animals.add(currentAnimal);
+                        if (!currentAnimal.getWasAdopted()) {
+                            animals.add(currentAnimal);
+                        }
                     }
                     animalsAll = animals;
 
