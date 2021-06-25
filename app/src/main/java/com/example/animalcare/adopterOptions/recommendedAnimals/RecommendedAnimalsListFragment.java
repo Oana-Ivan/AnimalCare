@@ -94,7 +94,8 @@ public class RecommendedAnimalsListFragment extends Fragment {
                             if (currentAnimal.getAttentionLevelRequired() <= attention
                                     && currentAnimal.getCaringLevelRequired() <= caring
                                     && ((currentAnimal.getSpecies().equals(DOG) && wantsDog)
-                                        || (currentAnimal.getSpecies().equals(CAT) && wantsCat))) {
+                                        || (currentAnimal.getSpecies().equals(CAT) && wantsCat))
+                                    && !currentAnimal.getWasAdopted()) {
                                 animals.add(currentAnimal);
                                 int id = recommendedAnimalDAO.getNoOfRecommendedAnimals() + 1;
                                 RecommendedAnimal recAnimal = new RecommendedAnimal(id, currentAnimal.getAnimalID(), username, currentAnimal.getAge(), currentAnimal.getGender(),

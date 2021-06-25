@@ -53,7 +53,9 @@ public class SavedAnimalsAdapter extends RecyclerView.Adapter<SavedAnimalsAdapte
         holder.detailsTV.setText(details1);
         holder.detailsTV2.setText(details2);
         holder.detailsTV3.setText(details3);
-        Glide.with(holder.animalImg.getContext()).load(animal.getImage()).into(holder.animalImg);
+        if (animal.getImage() != null) {
+            Glide.with(holder.animalImg.getContext()).load(animal.getImage()).into(holder.animalImg);
+        }
     }
 
     @Override

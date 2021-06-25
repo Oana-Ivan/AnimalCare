@@ -127,105 +127,129 @@ public class AddAnimalActivity extends AppCompatActivity {
 
                         assignData();
 
-                        if(!emptyFields() && radioSelected() && imageUri != null) {
+                        if(!emptyFields() && radioSelected()) {
+                            if (imageUri != null) {
 
-                            File newFile = new File(imageUri.getPath());
-                            try {
-                                compressed = new Compressor(AddAnimalActivity.this)
-                                        .setMaxHeight(224).setMaxWidth(224)
-                                        .setQuality(50).compressToBitmap(newFile);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                            compressed.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                            byte[] thumbData = byteArrayOutputStream.toByteArray();
-
-
-                            try {
-
-                                // Resize image
-                                Bitmap animalImgResized = Bitmap.createScaledBitmap(compressed, 224, 224, true);
-
-
-                                MobilenetV110224Quant modelBreeds = MobilenetV110224Quant.newInstance(getBaseContext());
-                                TensorBuffer inputImage = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
-                                inputImage.loadBuffer(TensorImage.fromBitmap(animalImgResized).getBuffer());
-
-                                // Runs model inference and gets result.
-                                MobilenetV110224Quant.Outputs outputs = modelBreeds.process(inputImage);
-                                TensorBuffer breeds = outputs.getOutputFeature0AsTensorBuffer();
-
-                                float[] results = breeds.getFloatArray();
-                                breed = getMaxBreed(results);
-
-//                                float max = 0.0f;
-//                                int poz = 0;
-//                                for (int i = 0; i < results.length; i++) {
-//                                    if (results[i] > max) {
-//                                        max = results[i];
-//                                        poz = i;
-//                                    }
-//                                }
-//                                String l = get("labels.txt");
-//                                String[] labelsArray = l.split("\n");
-
-                                // Close model
-                                modelBreeds.close();
-
-                            } catch (IOException e) {
-                                // Handle the exception
-                            }
-
-                            UploadTask image_path = storageReference.child("animal_image").child(animalID + ".jpg").putBytes(thumbData);
-
-                            Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                                @Override
-                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                                    if (!task.isSuccessful()) {
-                                        throw task.getException();
-                                    }
-
-                                    // Continue with the task to get the download URL
-                                    return storageReference.child("animal_image").child(animalID + ".jpg").getDownloadUrl();
+                                File newFile = new File(imageUri.getPath());
+                                try {
+                                    compressed = new Compressor(AddAnimalActivity.this)
+                                            .setMaxHeight(224).setMaxWidth(224)
+                                            .setQuality(50).compressToBitmap(newFile);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Uri> task) {
-                                    if (task.isSuccessful()) {
-                                        Uri downloadUri = task.getResult();
-                                        image = downloadUri.toString();
 
-                                        Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, image);
-                                        newAnimal.setBreed(breed);
+                                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                                compressed.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                                byte[] thumbData = byteArrayOutputStream.toByteArray();
 
-                                        db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
+
+                                try {
+
+                                    // Resize image
+                                    Bitmap animalImgResized = Bitmap.createScaledBitmap(compressed, 224, 224, true);
+
+
+                                    MobilenetV110224Quant modelBreeds = MobilenetV110224Quant.newInstance(getBaseContext());
+                                    TensorBuffer inputImage = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
+                                    inputImage.loadBuffer(TensorImage.fromBitmap(animalImgResized).getBuffer());
+
+                                    // Runs model inference and gets result.
+                                    MobilenetV110224Quant.Outputs outputs = modelBreeds.process(inputImage);
+                                    TensorBuffer breeds = outputs.getOutputFeature0AsTensorBuffer();
+
+                                    float[] results = breeds.getFloatArray();
+                                    breed = getMaxBreed(results);
+
+                                    //                                float max = 0.0f;
+                                    //                                int poz = 0;
+                                    //                                for (int i = 0; i < results.length; i++) {
+                                    //                                    if (results[i] > max) {
+                                    //                                        max = results[i];
+                                    //                                        poz = i;
+                                    //                                    }
+                                    //                                }
+                                    //                                String l = get("labels.txt");
+                                    //                                String[] labelsArray = l.split("\n");
+
+                                    // Close model
+                                    modelBreeds.close();
+
+                                } catch (IOException e) {
+                                    // Handle the exception
+                                }
+
+                                UploadTask image_path = storageReference.child("animal_image").child(animalID + ".jpg").putBytes(thumbData);
+
+                                Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                    @Override
+                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                        if (!task.isSuccessful()) {
+                                            throw task.getException();
+                                        }
+
+                                        // Continue with the task to get the download URL
+                                        return storageReference.child("animal_image").child(animalID + ".jpg").getDownloadUrl();
+                                    }
+                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        if (task.isSuccessful()) {
+                                            Uri downloadUri = task.getResult();
+                                            image = downloadUri.toString();
+
+                                            Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, image);
+                                            newAnimal.setBreed(breed);
+
+                                            db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
+
+                                                        // Redirect to All animals
+                                                        Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
+                                                        finish();
+                                                        startActivity(intent);
+                                                    } else {
+                                                        String error = task.getException().getMessage();
+                                                        Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
+                                                    }
                                                     progressDialog.dismiss();
-                                                    Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
-
-                                                    // Redirect to All animals
-                                                    Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
-                                                    finish();
-                                                    startActivity(intent);
                                                 }
-                                                else {
-                                                    String error = task.getException().getMessage();
-                                                    Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
-                                                }
-                                                progressDialog.dismiss();
-                                            }
 
-                                        });
+                                            });
 
-                                    } else {
-                                        // Handle failures
+                                        } else {
+                                            // Handle failures
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            } else {
+                                Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, null);
+                                newAnimal.setBreed("unknown");
+
+                                db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
+
+                                            // Redirect to All animals
+                                            Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
+                                            finish();
+                                            startActivity(intent);
+                                        } else {
+                                            String error = task.getException().getMessage();
+                                            Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
+                                        }
+                                        progressDialog.dismiss();
+                                    }
+
+                                });
+                            }
                         }
                     }
                 });

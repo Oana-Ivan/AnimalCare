@@ -69,13 +69,17 @@ public class AnimalsAdapter extends RecyclerView.Adapter<AnimalsAdapter.AnimalsV
         holder.detailsTV2.setText(details2);
         holder.detailsTV3.setText(details3);
 
-        RequestOptions myOptions = new RequestOptions()
-                .override(100, 100);
-        Glide.with(holder.animalImg.getContext())
-                .asBitmap()
-                .apply(myOptions)
-                .load(animal.getImage())
-                .into(holder.animalImg);
+        if (animal.getImage() != null) {
+            RequestOptions myOptions = new RequestOptions()
+                    .override(100, 100);
+            Glide.with(holder.animalImg.getContext())
+                    .asBitmap()
+                    .apply(myOptions)
+                    .load(animal.getImage())
+                    .into(holder.animalImg);
+        } else {
+//            holder.animalImg.setBackgroundResource(R.drawable.paw);
+        }
 
 //        Glide.with(holder.animalImg.getContext()).load(animal.getImage()).into(holder.animalImg);
     }

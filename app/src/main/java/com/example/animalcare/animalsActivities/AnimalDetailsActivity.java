@@ -51,7 +51,12 @@ public class AnimalDetailsActivity extends AppCompatActivity {
         btnAllAnimals = findViewById(R.id.activity_animal_details_btn_all_animals);
 
         // Set animal image
-        Glide.with(this).load(currentAnimal.getImage()).into(animalImg);
+        if (currentAnimal.getImage() != null) {
+            Glide.with(this).load(currentAnimal.getImage()).into(animalImg);
+        }
+        else {
+//            animalImg.setBackgroundResource(R.drawable.paw);
+        }
 
         // Set text for information about animal
         String animalInfo1 = currentAnimal.getSpecies();
