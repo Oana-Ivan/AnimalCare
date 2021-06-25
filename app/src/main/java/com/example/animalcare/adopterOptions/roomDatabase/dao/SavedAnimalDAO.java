@@ -32,6 +32,9 @@ public interface SavedAnimalDAO {
     @Query("SELECT * FROM saved_animals WHERE adopterID LIKE :adopterID AND animal_id LIKE :animalID LIMIT 1")
     List<SavedAnimal> findByAdopterIDAndAnimalID(String adopterID, String animalID);
 
+    @Query("DELETE FROM saved_animals WHERE adopterID LIKE :adopterID AND animal_id LIKE :animalID")
+    void removeByAnimalID(String adopterID, String animalID);
+
     @Insert
     void insertAll(SavedAnimal... saved_animals);
 

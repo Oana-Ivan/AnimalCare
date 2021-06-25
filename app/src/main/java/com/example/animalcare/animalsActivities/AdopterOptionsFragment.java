@@ -23,6 +23,8 @@ import static com.example.animalcare.authentication.RegisterActivity.UserPREFERE
 import static com.example.animalcare.authentication.RegisterActivity.Username;
 
 public class AdopterOptionsFragment extends Fragment {
+    private static final String REMOVE = "REMOVE FROM SAVED ANIMALS";
+    private static final String SAVE = "SAVE";
 
     public AdopterOptionsFragment() {
         // Required empty public constructor
@@ -34,17 +36,25 @@ public class AdopterOptionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_adopter_options, container, false);
         AppCompatButton saveAnimalBtn = view.findViewById(R.id.animal_fragment_options_save);
 
-        // Save animal in Room database
+        Animal currentAnimal = (Animal) getActivity().getIntent().getSerializableExtra("Animal");
+
+        AdopterOptionsDatabase db = Room.databaseBuilder(getContext(), AdopterOptionsDatabase.class, "db-app").allowMainThreadQueries().build();
+        SavedAnimalDAO savedAnimalDAO = db.savedAnimalDAO();
+
+        // Retrieve username from sharedPreferences
+        SharedPreferences sharedpreferences = getActivity().getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);
+        String username = sharedpreferences.getString(Username, "");
+
+        // Rename the button
+        if (savedAnimalDAO.findByAdopterIDAndAnimalID(username, currentAnimal.getAnimalID()).size() == 0) {
+            saveAnimalBtn.setText(SAVE);
+        }
+        else {
+            saveAnimalBtn.setText(REMOVE);
+        }
+
+        // Save animal in Room database (onClick event)
         saveAnimalBtn.setOnClickListener(v -> {
-            Animal currentAnimal = (Animal) getActivity().getIntent().getSerializableExtra("Animal");
-
-            AdopterOptionsDatabase db = Room.databaseBuilder(getContext(), AdopterOptionsDatabase.class, "db-app").allowMainThreadQueries().build();
-            SavedAnimalDAO savedAnimalDAO = db.savedAnimalDAO();
-
-            // Retrieve username from sharedPreferences
-            SharedPreferences sharedpreferences = getActivity().getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);
-            String username = sharedpreferences.getString(Username, "");
-
             // verify if the animal already exists
             if (savedAnimalDAO.findByAdopterIDAndAnimalID(username, currentAnimal.getAnimalID()).size() == 0) {
                 int id = savedAnimalDAO.getNoOfSavedAnimals() + 1;
@@ -56,10 +66,14 @@ public class AdopterOptionsFragment extends Fragment {
 
                 savedAnimalDAO.insertAll(newAnimal);
                 Toast.makeText(getContext(), "The animal has been added", Toast.LENGTH_LONG).show();
+                saveAnimalBtn.setText(REMOVE);
 
             }
             else {
-                Toast.makeText(getContext(), "Animal already saved", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), "Animal already saved", Toast.LENGTH_LONG).show();
+                savedAnimalDAO.removeByAnimalID(username, currentAnimal.getAnimalID());
+                Toast.makeText(getContext(), "Animal removed", Toast.LENGTH_LONG).show();
+                saveAnimalBtn.setText(SAVE);
             }
         });
         return view;

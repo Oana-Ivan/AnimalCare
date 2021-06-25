@@ -62,6 +62,23 @@ public class SavedAnimalsActivity extends AppCompatActivity {
             intent.putExtra("Animal", animal);
             startActivity(intent);
         });
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        // Retrieve username from sharedPreferences
+        SharedPreferences sharedpreferences = getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);
+        String username = sharedpreferences.getString(Username, "");
+
+        // Retrieve all saved animals from Room Database
+        AdopterOptionsDatabase db = Room.databaseBuilder(this, AdopterOptionsDatabase.class, "db-app").allowMainThreadQueries().build();
+        SavedAnimalDAO savedAnimalDAO = db.savedAnimalDAO();
+        List<SavedAnimal> savedAnimals = savedAnimalDAO.findByAdopterID(username);
+
+        // Initialize recycle view
+        animalsAdapter = new SavedAnimalsAdapter((ArrayList<SavedAnimal>) savedAnimals);
+        animalsRV.setLayoutManager(animalsLayoutManager);
+        animalsRV.setAdapter(animalsAdapter);
     }
 }
