@@ -134,6 +134,29 @@ public class AnimalsListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        // update animals list
+        animalsCollection.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                animals = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Animal currentAnimal = document.toObject(Animal.class);
+                    animals.add(currentAnimal);
+                }
+                animalsAll = animals;
+                animalsAdapter.filterList(animals);
+
+                Log.d(TAG, animals.toString());
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+        });
+        animalsAdapter.notifyDataSetChanged();
+    }
+
     private void filter(String text) {
         ArrayList<Animal> filteredList = new ArrayList<>();
 

@@ -30,12 +30,21 @@ public class AnimalDetailsActivity extends AppCompatActivity {
     private TextView animalInfoTV1, animalInfoTV2, caringInfoTV, animalSpeciesTV;
     private AppCompatButton btnAllAnimals;
 
+    public static final String CurrentAnimal = "CurrentAnimal";
+    public static final String currentAnimalID = "currentAnimalID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_details);
 
         currentAnimal = (Animal) getIntent().getSerializableExtra("Animal");
+
+        // Save animal id in sharedPreferences
+        SharedPreferences sharedpreferencesA = getSharedPreferences(CurrentAnimal, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferencesA.edit();
+        editor.putString(currentAnimalID, currentAnimal.getAnimalID());
+        editor.apply();
 
         animalImg = findViewById(R.id.activity_animal_details_img);
         animalInfoTV1 = findViewById(R.id.activity_animal_details_tv_info_1);
@@ -94,6 +103,7 @@ public class AnimalDetailsActivity extends AppCompatActivity {
 
         // Redirect to All animals
         btnAllAnimals.setOnClickListener(b -> {
+            finish();
             startActivity(new Intent(AnimalDetailsActivity.this, AnimalsListActivity.class));
         });
 
