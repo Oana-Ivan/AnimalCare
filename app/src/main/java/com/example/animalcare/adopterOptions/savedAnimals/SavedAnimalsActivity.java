@@ -9,8 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.animalcare.CRUD.AnimalsAdapter;
 import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.R;
@@ -19,12 +21,17 @@ import com.example.animalcare.adopterOptions.roomDatabase.dao.SavedAnimalDAO;
 import com.example.animalcare.adopterOptions.roomDatabase.entity.SavedAnimal;
 import com.example.animalcare.animalsActivities.AnimalDetailsActivity;
 import com.example.animalcare.models.Animal;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
 import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
 import static com.example.animalcare.authentication.RegisterActivity.Username;
+import static com.example.animalcare.models.Animal.DOG;
+import static com.example.animalcare.models.Animal.MALE;
 
 public class SavedAnimalsActivity extends AppCompatActivity {
     private RecyclerView animalsRV;
@@ -58,9 +65,27 @@ public class SavedAnimalsActivity extends AppCompatActivity {
         animalsAdapter.setOnItemClickListener(position -> {
             Toast.makeText(SavedAnimalsActivity.this, savedAnimals.get(position).getSpecies(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(SavedAnimalsActivity.this, AnimalDetailsActivity.class);
-            Animal animal = new Animal(savedAnimals.get(position).getArrivingDate(), savedAnimals.get(position).getAge(), savedAnimals.get(position).getGender(), savedAnimals.get(position).getSpecies(), savedAnimals.get(position).getColor(), savedAnimals.get(position).getDescription(), savedAnimals.get(position).isDisease(), savedAnimals.get(position).getPersonalityType(), savedAnimals.get(position).getSize(), savedAnimals.get(position).getAnimalId(), savedAnimals.get(position).getImage());
-            intent.putExtra("Animal", animal);
-            startActivity(intent);
+            Animal animal = new Animal(savedAnimals.get(position).getArrivingDate(), savedAnimals.get(position).getAge(), savedAnimals.get(position).getGender(),
+                    savedAnimals.get(position).getSpecies(), savedAnimals.get(position).getColor(), savedAnimals.get(position).getDescription(),
+                    savedAnimals.get(position).isDisease(), savedAnimals.get(position).getPersonalityType(), savedAnimals.get(position).getSize(),
+                    savedAnimals.get(position).getAnimalId(), savedAnimals.get(position).getImage());
+
+            // Check if the animal is still in the shelter
+            FirebaseFirestore.getInstance().collection("Animals").document(savedAnimals.get(position).getAnimalId())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            Animal aux = document.toObject(Animal.class);
+                            if (aux != null) {
+                                animal.setWasAdopted(aux.getWasAdopted());
+                                intent.putExtra("Animal", animal);
+                                startActivity(intent);
+                            }
+                        } else {
+                            Log.d(TAG, "Failed with: ", task.getException());
+                        }
+                    });
         });
     }
 
@@ -80,5 +105,32 @@ public class SavedAnimalsActivity extends AppCompatActivity {
         animalsAdapter = new SavedAnimalsAdapter((ArrayList<SavedAnimal>) savedAnimals);
         animalsRV.setLayoutManager(animalsLayoutManager);
         animalsRV.setAdapter(animalsAdapter);
+
+        // click on animal
+        animalsAdapter.setOnItemClickListener(position -> {
+            Toast.makeText(SavedAnimalsActivity.this, savedAnimals.get(position).getSpecies(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(SavedAnimalsActivity.this, AnimalDetailsActivity.class);
+            Animal animal = new Animal(savedAnimals.get(position).getArrivingDate(), savedAnimals.get(position).getAge(), savedAnimals.get(position).getGender(),
+                    savedAnimals.get(position).getSpecies(), savedAnimals.get(position).getColor(), savedAnimals.get(position).getDescription(),
+                    savedAnimals.get(position).isDisease(), savedAnimals.get(position).getPersonalityType(), savedAnimals.get(position).getSize(),
+                    savedAnimals.get(position).getAnimalId(), savedAnimals.get(position).getImage());
+
+            // Check if the animal is still in the shelter
+            FirebaseFirestore.getInstance().collection("Animals").document(savedAnimals.get(position).getAnimalId())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            Animal aux = document.toObject(Animal.class);
+                            if (aux != null) {
+                                animal.setWasAdopted(aux.getWasAdopted());
+                                intent.putExtra("Animal", animal);
+                                startActivity(intent);
+                            }
+                        } else {
+                            Log.d(TAG, "Failed with: ", task.getException());
+                        }
+            });
+        });
     }
 }
