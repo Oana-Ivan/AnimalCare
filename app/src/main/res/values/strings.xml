@@ -145,4 +145,11 @@
     <string name="mark_as_unavailable">Mark as unavailable</string>
     <string name="animal_unavailable">This animal is no longer available in the shelter.</string>
     <string name="other_info">Other info</string>
+    <string name="previous_visits_added">Previous visits added</string>
+    <string name="visit_details">Visit details</string>
+    <string name="visit_info">Visit info</string>
+    <string name="visit_date_and_hour">Visit date and hour</string>
+    <string name="adopter_sentencecase">Adopter</string>
+    <string name="adopter_info">Adopter info</string>
+    <string name="mark_visit_as_closed">Mark visit as closed.</string>
 </resources>

@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
+import static com.example.animalcare.models.Visit.STATUS_ON;
 
 public class VisitsListActivity extends AppCompatActivity {
     private RecyclerView visitsRV;
@@ -36,6 +37,7 @@ public class VisitsListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager visitsLayoutManager;
 
     private ImageView setStatusOnBtn;
+    public static final String VISIT = "VISIT";
 
     // cloud database
     public FirebaseFirestore db;
@@ -60,7 +62,9 @@ public class VisitsListActivity extends AppCompatActivity {
                     ArrayList<Visit> visits = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Visit currentVisit = document.toObject(Visit.class);
-                        visits.add(currentVisit);
+                        if (currentVisit.getStatus().equals(STATUS_ON)) {
+                            visits.add(currentVisit);
+                        }
                     }
                     visitsAdapter = new VisitsAdapter(visits);
 
@@ -70,8 +74,17 @@ public class VisitsListActivity extends AppCompatActivity {
                     // click on image
                     visitsAdapter.setOnItemClickListener(position -> {
                         Toast.makeText(VisitsListActivity.this, visits.get(position).getAdopterUsername(), Toast.LENGTH_SHORT).show();
-                        // TODO Update in firebase the status
                         visits.get(position).setStatus(Visit.STATUS_OFF);
+
+                        // Update status of visit in collection
+                        visitsCollection.document(visits.get(position).getVisitID())
+                                .set(visits.get(position))
+                                .addOnSuccessListener((OnSuccessListener) o -> Log.d(TAG, "Updated visit"))
+                                .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
+                    }, position -> {
+                        Intent intent = new Intent(VisitsListActivity.this, VisitDetailsActivity.class);
+                        intent.putExtra(VISIT, visits.get(position));
+                        startActivity(intent);
                     });
                     Log.d(TAG, visits.toString());
                 } else {

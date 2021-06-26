@@ -9,26 +9,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
-import com.example.animalcare.adopterOptions.AddVisitActivity;
+import com.example.animalcare.adopterOptions.visits.AddVisitActivity;
 import com.example.animalcare.adopterOptions.recommendedAnimals.RecommendedAnimalsActivity;
 import com.example.animalcare.adopterOptions.savedAnimals.SavedAnimalsActivity;
-import com.example.animalcare.authentication.LoginActivity;
-import com.example.animalcare.authentication.LoginAdminActivity;
-import com.example.animalcare.authentication.RegisterActivity;
 import com.example.animalcare.models.BasicUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import static android.content.ContentValues.TAG;
-import static com.example.animalcare.authentication.RegisterActivity.ADOPTER;
 import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
-import static com.example.animalcare.authentication.RegisterActivity.UserRole;
 import static com.example.animalcare.authentication.RegisterActivity.Username;
 
 

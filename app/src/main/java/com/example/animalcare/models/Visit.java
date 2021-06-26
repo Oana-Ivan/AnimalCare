@@ -1,8 +1,9 @@
 package com.example.animalcare.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Visit {
+public class Visit implements Serializable {
     private String visitID;
     private String adopterUsername;
     private int day;

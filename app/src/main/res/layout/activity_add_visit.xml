@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_schema_background_2"
-    tools:context=".adopterOptions.AddVisitActivity">
+    tools:context=".adopterOptions.visits.AddVisitActivity">
 
     <TextView
         android:id="@+id/activity_add_visit_tv"
@@ -35,7 +35,7 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_add_visit_tv"
-        app:layout_constraintVertical_bias="0.3">
+        app:layout_constraintVertical_bias="0.2">
 
         <TextView
             android:id="@+id/activity_add_visit_tv_date_time"
@@ -59,9 +59,11 @@
             android:textSize="15sp"
             android:padding="10dp"
             />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="horizontal">
             <Spinner
                 android:id="@+id/activity_add_visit_s_choose_day"
@@ -109,6 +111,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="horizontal">
             <Spinner
                 android:id="@+id/activity_add_visit_s_choose_hour"
@@ -147,6 +150,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_add_visit_ll" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_add_visit_ll"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <TextView
+        android:id="@+id/activity_add_visit_tv_previous_visits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="10dp"
+        android:text="@string/previous_visits_added"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_margin="20dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/activity_add_visit_btn" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_add_visit_rv_visits_list"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/activity_add_visit_tv_previous_visits" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

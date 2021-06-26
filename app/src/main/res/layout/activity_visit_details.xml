@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_schema_background_2"
+    tools:context=".adminAndVolunteerOptions.VisitDetailsActivity">
+
+    <TextView
+        android:id="@+id/activity_visit_details_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/color_schema_main"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/visit_details"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/activity_visit_details_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="15dp"
+        android:layout_margin="15dp"
+        android:background="@color/color_schema_background_transparent"
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_visit_details_tv_title"
+        app:layout_constraintVertical_bias="0.1">
+
+        <TextView
+            android:id="@+id/activity_visit_details_tv_info_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/visit_info"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:id="@+id/activity_visit_details_tv_info_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/visit_date_and_hour"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/activity_visit_details_tv_adopter_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/adopter_sentencecase"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/activity_visit_details_tv_adopter_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/adopter_info"
+            />
+        <TextView
+            android:id="@+id/activity_visit_details_tv_animals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/saved_animals"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_visit_details_rv_animals"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="200dp" />
+
+        <TextView
+            android:id="@+id/activity_visit_details_tv_closed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:padding="15dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:text="@string/mark_visit_as_closed"
+            />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
