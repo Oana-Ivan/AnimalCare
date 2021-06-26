@@ -57,7 +57,7 @@ public class AdopterOptionsFragment extends Fragment {
         saveAnimalBtn.setOnClickListener(v -> {
             // verify if the animal already exists
             if (savedAnimalDAO.findByAdopterIDAndAnimalID(username, currentAnimal.getAnimalID()).size() == 0) {
-                int id = savedAnimalDAO.getNoOfSavedAnimals() + 1;
+                String id = username + "_" + currentAnimal.getAnimalID();
                 // insert new animal
                 SavedAnimal newAnimal = new SavedAnimal(id, currentAnimal.getAnimalID(), username, currentAnimal.getAge(), currentAnimal.getGender(),
                         currentAnimal.getSpecies(), currentAnimal.getColor(), currentAnimal.getDescription(), currentAnimal.getDisease(),
