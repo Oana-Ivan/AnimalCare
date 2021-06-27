@@ -44,6 +44,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import id.zelory.compressor.Compressor;
 
@@ -84,7 +86,7 @@ public class UpdateAnimalActivity extends AppCompatActivity {
         initViews();
         firestoreInit();
         assignDataDefault();
-        Toast.makeText(UpdateAnimalActivity.this, animalID, Toast.LENGTH_LONG).show();
+
         progressDialog = new ProgressDialog(this);
         animalImage.setOnClickListener(view -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -101,11 +103,12 @@ public class UpdateAnimalActivity extends AppCompatActivity {
         });
 
         updateAnimalBtn.setOnClickListener(u -> {
-            progressDialog.setMessage("Storing Data...");
-            progressDialog.show();
             assignData();
 
-            if (!emptyFields() && radioSelected()) {
+            if (!emptyFields() && radioSelected() && validInput()) {
+                ageD = Double.parseDouble(age);
+                progressDialog.setMessage("Storing Data...");
+                progressDialog.show();
 
                 if (imageUri != null) {
                     // Get image and compress
@@ -310,7 +313,6 @@ public class UpdateAnimalActivity extends AppCompatActivity {
     private void assignData() {
         arrivingDate = arrivingDateET.getText().toString();
         age = ageET.getText().toString();
-        ageD = Double.parseDouble(age);
         color = colorET.getText().toString();
         description = descriptionET.getText().toString();
 
@@ -368,6 +370,54 @@ public class UpdateAnimalActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private boolean validInput() {
+
+        if (!verifyDateFormat(arrivingDate)) {
+            Toast.makeText(UpdateAnimalActivity.this, "Please enter a valid date! (Eg. 21/05/2021)", Toast.LENGTH_LONG).show();
+            arrivingDateET.setText("");
+            return false;
+        }
+        if (!verifyIfStringIsDouble(age)) {
+            Toast.makeText(UpdateAnimalActivity.this, "The age should be a number! (Eg. 2.5)", Toast.LENGTH_LONG).show();
+            ageET.setText("");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean verifyIfStringIsDouble (String input) {
+
+        // regular expression for a floating point number
+        String regex = "[+-]?[0-9]+(\\.[0-9]+)?([Ee][+-]?[0-9]+)?";
+
+        // compiling regex
+        Pattern p = Pattern.compile(regex);
+
+        // Creates a matcher that will match input1 against regex
+        Matcher m = p.matcher(input);
+
+        // If match found and equal to input1
+        if(m.find() && m.group().equals(input))
+            return true;
+        return false;
+    }
+
+    private boolean verifyDateFormat (String input) {
+        // regular expression for a floating point number
+        String regex = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+
+        // compiling regex
+        Pattern p = Pattern.compile(regex);
+
+        // Creates a matcher that will match input1 against regex
+        Matcher m = p.matcher(input);
+
+        // If match found and equal to input
+        if(m.find() && m.group().equals(input))
+            return true;
+        return false;
     }
 
     private void choseImage() {

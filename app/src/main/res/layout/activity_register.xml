@@ -100,6 +100,7 @@
             android:background="@color/color_schema_background"
             android:padding="15dp"
             android:layout_marginTop="15dp"
+            android:inputType="textPassword"
             />
 
         <EditText
@@ -111,6 +112,7 @@
             android:background="@color/color_schema_background"
             android:padding="15dp"
             android:layout_marginTop="15dp"
+            android:inputType="textPassword"
             />
 
         <androidx.appcompat.widget.AppCompatButton

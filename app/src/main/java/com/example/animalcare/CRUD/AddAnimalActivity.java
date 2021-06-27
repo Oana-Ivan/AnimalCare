@@ -25,15 +25,12 @@ import androidx.core.content.ContextCompat;
 import com.example.animalcare.R;
 import com.example.animalcare.ml.MobilenetV110224Quant;
 import com.example.animalcare.models.Animal;
-import com.example.animalcare.usersMainScreens.AdminHomeActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -48,12 +45,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import id.zelory.compressor.Compressor;
 
@@ -96,7 +89,6 @@ public class AddAnimalActivity extends AppCompatActivity {
                 for (DocumentSnapshot document : task.getResult()) {
                     collectionSize++;
                 }
-                Toast.makeText(AddAnimalActivity.this, "No of animals: " + collectionSize, Toast.LENGTH_LONG).show();
                 collectionSize++;
                 animalID = "animal_" + collectionSize;
 
@@ -119,137 +111,125 @@ public class AddAnimalActivity extends AppCompatActivity {
                 });
 
 
-                addAnimalBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                addAnimalBtn.setOnClickListener(view -> {
+
+                    assignData();
+
+                    if(!emptyFields() && radioSelected() && validInput()) {
                         progressDialog.setMessage("Storing Data...");
                         progressDialog.show();
+                        ageD = Double.parseDouble(age);
 
-                        assignData();
+                        if (imageUri != null) {
 
-                        if(!emptyFields() && radioSelected()) {
-                            if (imageUri != null) {
-
-                                File newFile = new File(imageUri.getPath());
-                                try {
-                                    compressed = new Compressor(AddAnimalActivity.this)
-                                            .setMaxHeight(224).setMaxWidth(224)
-                                            .setQuality(50).compressToBitmap(newFile);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                                compressed.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                                byte[] thumbData = byteArrayOutputStream.toByteArray();
-
-
-                                try {
-
-                                    // Resize image
-                                    Bitmap animalImgResized = Bitmap.createScaledBitmap(compressed, 224, 224, true);
-
-
-                                    MobilenetV110224Quant modelBreeds = MobilenetV110224Quant.newInstance(getBaseContext());
-                                    TensorBuffer inputImage = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
-                                    inputImage.loadBuffer(TensorImage.fromBitmap(animalImgResized).getBuffer());
-
-                                    // Runs model inference and gets result.
-                                    MobilenetV110224Quant.Outputs outputs = modelBreeds.process(inputImage);
-                                    TensorBuffer breeds = outputs.getOutputFeature0AsTensorBuffer();
-
-                                    float[] results = breeds.getFloatArray();
-                                    breed = getMaxBreed(results);
-
-                                    //                                float max = 0.0f;
-                                    //                                int poz = 0;
-                                    //                                for (int i = 0; i < results.length; i++) {
-                                    //                                    if (results[i] > max) {
-                                    //                                        max = results[i];
-                                    //                                        poz = i;
-                                    //                                    }
-                                    //                                }
-                                    //                                String l = get("labels.txt");
-                                    //                                String[] labelsArray = l.split("\n");
-
-                                    // Close model
-                                    modelBreeds.close();
-
-                                } catch (IOException e) {
-                                    // Handle the exception
-                                }
-
-                                UploadTask image_path = storageReference.child("animal_image").child(animalID + ".jpg").putBytes(thumbData);
-
-                                Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                                    @Override
-                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                                        if (!task.isSuccessful()) {
-                                            throw task.getException();
-                                        }
-
-                                        // Continue with the task to get the download URL
-                                        return storageReference.child("animal_image").child(animalID + ".jpg").getDownloadUrl();
-                                    }
-                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Uri> task) {
-                                        if (task.isSuccessful()) {
-                                            Uri downloadUri = task.getResult();
-                                            image = downloadUri.toString();
-
-                                            Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, image);
-                                            newAnimal.setBreed(breed);
-
-                                            db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        progressDialog.dismiss();
-                                                        Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
-
-                                                        // Redirect to All animals
-                                                        Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
-                                                        finish();
-                                                        startActivity(intent);
-                                                    } else {
-                                                        String error = task.getException().getMessage();
-                                                        Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
-                                                    }
-                                                    progressDialog.dismiss();
-                                                }
-
-                                            });
-
-                                        } else {
-                                            // Handle failures
-                                        }
-                                    }
-                                });
-                            } else {
-                                Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, null);
-                                newAnimal.setBreed("unknown");
-
-                                db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
-
-                                            // Redirect to All animals
-                                            Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
-                                            finish();
-                                            startActivity(intent);
-                                        } else {
-                                            String error = task.getException().getMessage();
-                                            Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
-                                        }
-                                        progressDialog.dismiss();
-                                    }
-
-                                });
+                            File newFile = new File(imageUri.getPath());
+                            try {
+                                compressed = new Compressor(AddAnimalActivity.this)
+                                        .setMaxHeight(224).setMaxWidth(224)
+                                        .setQuality(50).compressToBitmap(newFile);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
+
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                            compressed.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                            byte[] thumbData = byteArrayOutputStream.toByteArray();
+
+
+                            try {
+
+                                // Resize image
+                                Bitmap animalImgResized = Bitmap.createScaledBitmap(compressed, 224, 224, true);
+
+
+                                MobilenetV110224Quant modelBreeds = MobilenetV110224Quant.newInstance(getBaseContext());
+                                TensorBuffer inputImage = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
+                                inputImage.loadBuffer(TensorImage.fromBitmap(animalImgResized).getBuffer());
+
+                                // Runs model inference and gets result.
+                                MobilenetV110224Quant.Outputs outputs = modelBreeds.process(inputImage);
+                                TensorBuffer breeds = outputs.getOutputFeature0AsTensorBuffer();
+
+                                float[] results = breeds.getFloatArray();
+                                breed = getMaxBreed(results);
+
+                                // Close model
+                                modelBreeds.close();
+
+                            } catch (IOException e) {
+                                // Handle the exception
+                            }
+
+                            UploadTask image_path = storageReference.child("animal_image").child(animalID + ".jpg").putBytes(thumbData);
+
+                            Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                @Override
+                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task1) throws Exception {
+                                    if (!task1.isSuccessful()) {
+                                        throw task1.getException();
+                                    }
+
+                                    // Continue with the task to get the download URL
+                                    return storageReference.child("animal_image").child(animalID + ".jpg").getDownloadUrl();
+                                }
+                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task1) {
+                                    if (task1.isSuccessful()) {
+                                        Uri downloadUri = task1.getResult();
+                                        image = downloadUri.toString();
+
+                                        Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, image);
+                                        newAnimal.setBreed(breed);
+
+                                        db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task1) {
+                                                if (task1.isSuccessful()) {
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
+
+                                                    // Redirect to All animals
+                                                    Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
+                                                    finish();
+                                                    startActivity(intent);
+                                                } else {
+                                                    String error = task1.getException().getMessage();
+                                                    Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
+                                                }
+                                                progressDialog.dismiss();
+                                            }
+
+                                        });
+
+                                    } else {
+                                        // Handle failures
+                                    }
+                                }
+                            });
+                        } else {
+                            Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, null);
+                            newAnimal.setBreed("unknown");
+
+                            db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task1) {
+                                    if (task1.isSuccessful()) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
+
+                                        // Redirect to All animals
+                                        Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
+                                        finish();
+                                        startActivity(intent);
+                                    } else {
+                                        String error = task1.getException().getMessage();
+                                        Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
+                                    }
+                                    progressDialog.dismiss();
+                                }
+
+                            });
                         }
                     }
                 });
@@ -355,6 +335,50 @@ public class AddAnimalActivity extends AppCompatActivity {
         return false;
     }
 
+    private boolean validInput() {
+
+        if (!verifyDateFormat(arrivingDate)) {
+            Toast.makeText(AddAnimalActivity.this, "Please enter a valid date! (Eg. 21/05/2021)", Toast.LENGTH_LONG).show();
+            arrivingDateET.setText("");
+            return false;
+        }
+        if (!verifyIfStringIsDouble(age)) {
+            Toast.makeText(AddAnimalActivity.this, "The age should be a number! (Eg. 2.5)", Toast.LENGTH_LONG).show();
+            ageET.setText("");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean verifyIfStringIsDouble (String input) {
+
+        // regular expression for a floating point number
+        String regex = "[+-]?[0-9]+(\\.[0-9]+)?([Ee][+-]?[0-9]+)?";
+
+        // compiling regex
+        Pattern p = Pattern.compile(regex);
+
+        // Creates a matcher that will match input1 against regex
+        Matcher m = p.matcher(input);
+
+        // If match found and equal to input1
+        return m.find() && m.group().equals(input);
+    }
+
+    private boolean verifyDateFormat (String input) {
+        // regular expression for a floating point number
+        String regex = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+
+        // compiling regex
+        Pattern p = Pattern.compile(regex);
+
+        // Creates a matcher that will match input1 against regex
+        Matcher m = p.matcher(input);
+
+        // If match found and equal to input
+        return m.find() && m.group().equals(input);
+    }
+
     public void firestoreInit() {
         db = FirebaseFirestore.getInstance();
         animalsCollection = db.collection("Animals");
@@ -365,7 +389,6 @@ public class AddAnimalActivity extends AppCompatActivity {
     private void assignData() {
         arrivingDate = arrivingDateET.getText().toString();
         age = ageET.getText().toString();
-        ageD = Double.parseDouble(age);
         color = colorET.getText().toString();
         description = descriptionET.getText().toString();
 

@@ -44,15 +44,16 @@
                 android:background="@color/color_schema_background_2_transparent"
                 android:orientation="vertical"
                 android:padding="20dp">
-                <EditText
-                    android:id="@+id/activity_update_volunteer_et_username"
+                <TextView
+                    android:id="@+id/activity_update_volunteer_tv_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:background="@color/white"
-                    android:hint="@string/enter_username"
+                    android:textStyle="bold"
+                    android:hint="@string/username"
                     android:padding="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="20sp"
                     />
                 <EditText
                     android:id="@+id/activity_update_volunteer_et_first_name"

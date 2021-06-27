@@ -3,9 +3,7 @@ package com.example.animalcare.CRUD;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
@@ -13,10 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.animalcare.R;
-import com.example.animalcare.authentication.LoginActivity;
-import com.example.animalcare.models.BasicUser;
 import com.example.animalcare.models.Volunteer;
-import com.example.animalcare.usersMainScreens.VolunteerHomeActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -26,13 +21,11 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.content.ContentValues.TAG;
 import static com.example.animalcare.authentication.RegisterActivity.LOG_ROUNDS;
-import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
-import static com.example.animalcare.authentication.RegisterActivity.UserRole;
-import static com.example.animalcare.authentication.RegisterActivity.Username;
-import static com.example.animalcare.authentication.RegisterActivity.VOLUNTEER;
 
 public class AddVolunteerActivity extends AppCompatActivity {
     private EditText usernameET, firstNameET, lastNameET, emailET, passwordET, startDateET, startHourET, endHourET;
@@ -55,7 +48,7 @@ public class AddVolunteerActivity extends AppCompatActivity {
 
         addVolunteerBtn.setOnClickListener(c -> {
             assignValues();
-            if (!fieldsEmpty() && !noWorkingDaySelected()) {
+            if (!fieldsEmpty() && !noWorkingDaySelected() && validInput()) {
 
                 // verify if volunteer already exists in the data base
                 db = FirebaseFirestore.getInstance();
@@ -153,5 +146,50 @@ public class AddVolunteerActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private boolean validInput() {
+
+        if (!verifyDateFormat(startDate)) {
+            Toast.makeText(AddVolunteerActivity.this, "Please enter a valid date! (Eg. 21/05/2021)", Toast.LENGTH_LONG).show();
+            startDateET.setText("");
+            return false;
+        }
+        if (!verifyRegex(startHour, "^(?:[9]|1[0-7]?)$")) {
+            Toast.makeText(AddVolunteerActivity.this, "The starting hour should be a number between 9 and 17! (Eg. 9)", Toast.LENGTH_LONG).show();
+            startHourET.setText("");
+            return false;
+        }
+        if (!verifyRegex(endHour, "^(?:1[0-8]?)$")) {
+            Toast.makeText(AddVolunteerActivity.this, "The ending hour should be a number between 10 and 18! (Eg. 14)", Toast.LENGTH_LONG).show();
+            endHourET.setText("");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean verifyRegex (String input, String regex) {
+        // compiling regex
+        Pattern p = Pattern.compile(regex);
+
+        // Creates a matcher that will match input1 against regex
+        Matcher m = p.matcher(input);
+
+        // If match found and equal to input1
+        return m.find() && m.group().equals(input);
+    }
+
+    private boolean verifyDateFormat (String input) {
+        // regular expression for a floating point number
+        String regex = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+
+        // compiling regex
+        Pattern p = Pattern.compile(regex);
+
+        // Creates a matcher that will match input1 against regex
+        Matcher m = p.matcher(input);
+
+        // If match found and equal to input
+        return m.find() && m.group().equals(input);
     }
 }

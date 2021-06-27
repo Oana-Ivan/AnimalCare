@@ -8,19 +8,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.animalcare.R;
 import com.example.animalcare.models.Volunteer;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.content.ContentValues.TAG;
 import static com.example.animalcare.authentication.RegisterActivity.LOG_ROUNDS;
@@ -33,11 +34,12 @@ import static com.example.animalcare.models.Volunteer.WEDNESDAY;
 public class UpdateVolunteerActivity extends AppCompatActivity {
     private Volunteer currentVolunteer;
 
-    private EditText usernameET, firstNameET, lastNameET, emailET, passwordET, startDateET, startHourET, endHourET;
+    private TextView usernameTV;
+    private EditText firstNameET, lastNameET, emailET, passwordET, startDateET, startHourET, endHourET;
     private CheckBox mondayCB, tuesdayCB, wednesdayCB, thursdayCB, fridayCB;
     AppCompatButton updateVolunteerBtn;
 
-    private String username, firstName, lastName, email, password, startDate, startHour, endHour;
+    private String firstName, lastName, email, password, startDate, startHour, endHour;
     private int startHourInt, endHourInt;
     private List<String> workingDays;
 
@@ -53,7 +55,7 @@ public class UpdateVolunteerActivity extends AppCompatActivity {
 
         updateVolunteerBtn.setOnClickListener(c -> {
             assignValues();
-            if (!fieldsEmpty() && !noWorkingDaySelected()) {
+            if (!fieldsEmpty() && !noWorkingDaySelected() && validInput()) {
                 // hashing password
                 String hashPwd = BCrypt.hashpw(password, BCrypt.gensalt(LOG_ROUNDS));
 
@@ -72,7 +74,6 @@ public class UpdateVolunteerActivity extends AppCompatActivity {
                 startHourInt = Integer.parseInt(startHourET.getText().toString());
                 endHourInt = Integer.parseInt(endHourET.getText().toString());
 
-                currentVolunteer.setUsername(username);
                 currentVolunteer.setFirstName(firstName);
                 currentVolunteer.setLastName(lastName);
                 currentVolunteer.setEmail(email);
@@ -103,7 +104,7 @@ public class UpdateVolunteerActivity extends AppCompatActivity {
     private void initViews() {
         currentVolunteer = (Volunteer) getIntent().getSerializableExtra("VOLUNTEER");
 
-        usernameET = findViewById(R.id.activity_update_volunteer_et_username);
+        usernameTV = findViewById(R.id.activity_update_volunteer_tv_username);
         firstNameET = findViewById(R.id.activity_update_volunteer_et_first_name);
         lastNameET = findViewById(R.id.activity_update_volunteer_et_last_name);
         emailET = findViewById(R.id.activity_update_volunteer_et_email);
@@ -121,7 +122,8 @@ public class UpdateVolunteerActivity extends AppCompatActivity {
         updateVolunteerBtn = findViewById(R.id.activity_update_volunteer_btn_update);
 
         // Default values
-        usernameET.setText(currentVolunteer.getUsername());
+        String username = "Volunteer: " + currentVolunteer.getUsername();
+        usernameTV.setText(username);
         firstNameET.setText(currentVolunteer.getFirstName());
         lastNameET.setText(currentVolunteer.getLastName());
         emailET.setText(currentVolunteer.getEmail());
@@ -148,7 +150,6 @@ public class UpdateVolunteerActivity extends AppCompatActivity {
     }
 
     private void assignValues() {
-        username = usernameET.getText().toString();
         firstName = firstNameET.getText().toString();
         lastName = lastNameET.getText().toString();
         email = emailET.getText().toString();
@@ -159,7 +160,7 @@ public class UpdateVolunteerActivity extends AppCompatActivity {
     }
 
     private boolean fieldsEmpty() {
-        if (username.equals("") || firstName.equals("") || lastName.equals("") || email.equals("") || password.equals("") || startDate.equals("") || startHour.equals("") || endHour.equals("")){
+        if (firstName.equals("") || lastName.equals("") || email.equals("") || password.equals("") || startDate.equals("") || startHour.equals("") || endHour.equals("")){
             Toast.makeText(UpdateVolunteerActivity.this, "All fields required!", Toast.LENGTH_LONG).show();
             return true;
         }
@@ -172,5 +173,57 @@ public class UpdateVolunteerActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private boolean validInput() {
+
+        if (!verifyDateFormat(startDate)) {
+            Toast.makeText(UpdateVolunteerActivity.this, "Please enter a valid date! (Eg. 21/05/2021)", Toast.LENGTH_LONG).show();
+            startDateET.setText("");
+            return false;
+        }
+        if (!verifyRegex(startHour, "^(?:[9]|1[0-7]?)$")) {
+            Toast.makeText(UpdateVolunteerActivity.this, "The starting hour should be a number between 9 and 17! (Eg. 9)", Toast.LENGTH_LONG).show();
+            startHourET.setText("");
+            return false;
+        }
+        if (!verifyRegex(endHour, "^(?:1[0-8]?)$")) {
+            Toast.makeText(UpdateVolunteerActivity.this, "The ending hour should be a number between 10 and 18! (Eg. 14)", Toast.LENGTH_LONG).show();
+            endHourET.setText("");
+            return false;
+        }
+
+        if (Integer.parseInt(startHour) > Integer.parseInt(endHour)) {
+            Toast.makeText(UpdateVolunteerActivity.this, "The ending hour should be after the starting hour (starting hour: " + startHour + ")" , Toast.LENGTH_LONG).show();
+            endHourET.setText("");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean verifyRegex (String input, String regex) {
+        // compiling regex
+        Pattern p = Pattern.compile(regex);
+
+        // Creates a matcher that will match input1 against regex
+        Matcher m = p.matcher(input);
+
+        // If match found and equal to input1
+        return m.find() && m.group().equals(input);
+    }
+
+    private boolean verifyDateFormat (String input) {
+        // regular expression for a floating point number
+        String regex = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+
+        // compiling regex
+        Pattern p = Pattern.compile(regex);
+
+        // Creates a matcher that will match input1 against regex
+        Matcher m = p.matcher(input);
+
+        // If match found and equal to input
+        return m.find() && m.group().equals(input);
     }
 }
