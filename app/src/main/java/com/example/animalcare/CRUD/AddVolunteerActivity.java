@@ -94,6 +94,7 @@ public class AddVolunteerActivity extends AppCompatActivity {
                                     .set(newVolunteer)
                                     .addOnSuccessListener((OnSuccessListener) o -> {
                                         Log.d(TAG, "Added new volunteer");
+                                        finish();
                                         startActivity(new Intent(AddVolunteerActivity.this, VolunteersListActivity.class));
                                     })
                                     .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));

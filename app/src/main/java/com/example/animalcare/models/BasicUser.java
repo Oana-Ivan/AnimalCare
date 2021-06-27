@@ -1,6 +1,8 @@
 package com.example.animalcare.models;
 
-public class BasicUser {
+import java.io.Serializable;
+
+public class BasicUser implements Serializable {
     private String username;
     private String firstName;
     private String lastName;

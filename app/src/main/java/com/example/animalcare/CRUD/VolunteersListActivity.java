@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.animalcare.R;
+import com.example.animalcare.adminAndVolunteerOptions.VisitsListActivity;
 import com.example.animalcare.models.BasicUser;
 import com.example.animalcare.models.Volunteer;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -85,6 +86,8 @@ public class VolunteersListActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Object o) {
                                         Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                        finish();
+                                        startActivity(getIntent());
                                     }
 
                                 })
@@ -94,6 +97,10 @@ public class VolunteersListActivity extends AppCompatActivity {
                                         Log.w(TAG, "Error deleting document", e);
                                     }
                                 });
+                    }, position -> {
+                        Intent intent = new Intent(VolunteersListActivity.this, UpdateVolunteerActivity.class);
+                        intent.putExtra("VOLUNTEER", volunteers.get(position));
+                        startActivity(intent);
                     });
                     Log.d(TAG, volunteers.toString());
                 } else {

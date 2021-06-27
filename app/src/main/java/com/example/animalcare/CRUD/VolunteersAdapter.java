@@ -17,14 +17,16 @@ import java.util.ArrayList;
 
 public class VolunteersAdapter extends RecyclerView.Adapter<VolunteersAdapter.VolunteersViewHolder> {
     private ArrayList<Volunteer> volunteersList;
-    private OnItemClickListener onItemClickListener;
+    private OnItemClickListener onItemClickListener1;
+    private OnItemClickListener onItemClickListener2;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        onItemClickListener = listener;
+    public void setOnItemClickListener(OnItemClickListener listener1, OnItemClickListener listener2) {
+        onItemClickListener1 = listener1;
+        onItemClickListener2 = listener2;
     }
 
     public VolunteersAdapter(ArrayList<Volunteer> volunteersList) {
@@ -35,7 +37,7 @@ public class VolunteersAdapter extends RecyclerView.Adapter<VolunteersAdapter.Vo
     @Override
     public VolunteersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.volunteer_item, parent, false);
-        VolunteersViewHolder volunteersViewHolder = new VolunteersViewHolder(view, onItemClickListener);
+        VolunteersViewHolder volunteersViewHolder = new VolunteersViewHolder(view, onItemClickListener1, onItemClickListener2);
         return volunteersViewHolder;
     }
 
@@ -60,7 +62,7 @@ public class VolunteersAdapter extends RecyclerView.Adapter<VolunteersAdapter.Vo
         public TextView detailsTV, emailTV, programTV;
         public ImageView deleteImg;
 
-        public VolunteersViewHolder(@NonNull View itemView, OnItemClickListener listener) {
+        public VolunteersViewHolder(@NonNull View itemView, OnItemClickListener listener1, OnItemClickListener listener2) {
             super(itemView);
             detailsTV = itemView.findViewById(R.id.volunteer_item_details);
             emailTV = itemView.findViewById(R.id.volunteer_item_email);
@@ -68,10 +70,19 @@ public class VolunteersAdapter extends RecyclerView.Adapter<VolunteersAdapter.Vo
             deleteImg = itemView.findViewById(R.id.volunteer_item_img_delete);
 
             deleteImg.setOnClickListener(v -> {
-                if (listener != null) {
+                if (listener1 != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(position);
+                        listener1.onItemClick(position);
+                    }
+                }
+            });
+
+            itemView.setOnClickListener(v -> {
+                if (listener2 != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener2.onItemClick(position);
                     }
                 }
             });

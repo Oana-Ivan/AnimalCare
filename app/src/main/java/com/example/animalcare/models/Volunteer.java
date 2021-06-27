@@ -1,8 +1,9 @@
 package com.example.animalcare.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Volunteer extends BasicUser{
+public class Volunteer extends BasicUser implements Serializable {
     private int startingHour;
     private int endingHour;
     private List<String> workingDays;
