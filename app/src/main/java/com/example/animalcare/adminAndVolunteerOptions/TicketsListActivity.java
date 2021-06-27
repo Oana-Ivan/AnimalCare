@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
+import static com.example.animalcare.models.Ticket.CLOSED;
+import static com.example.animalcare.models.Ticket.OPEN;
 
 public class TicketsListActivity extends AppCompatActivity {
     private RecyclerView ticketsRV;
@@ -43,9 +46,9 @@ public class TicketsListActivity extends AppCompatActivity {
 
         ticketsRV = findViewById(R.id.activity_tickets_list_rv);
         ticketsRV.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
 
-        // Retrieve volunteers data from Firestore
+        layoutManager = new LinearLayoutManager(this);
+        // Retrieve tickets data from FireStore
         db = FirebaseFirestore.getInstance();
         ticketsCollection = db.collection("Tickets");
         ticketsCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -55,7 +58,15 @@ public class TicketsListActivity extends AppCompatActivity {
                     ArrayList<Ticket> tickets = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Ticket currentTicket = document.toObject(Ticket.class);
-                        tickets.add(currentTicket);
+                        if (currentTicket.getStatus().equals(OPEN)){
+                            tickets.add(currentTicket);
+                        }
+                    }
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Ticket currentTicket = document.toObject(Ticket.class);
+                        if (currentTicket.getStatus().equals(CLOSED)){
+                            tickets.add(currentTicket);
+                        }
                     }
                     ticketAdapter = new TicketAdapter(tickets);
 
@@ -72,6 +83,10 @@ public class TicketsListActivity extends AppCompatActivity {
                                 .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
 
 
+                    }, position -> {
+                        Intent intent = new Intent(TicketsListActivity.this, TicketDetailsActivity.class);
+                        intent.putExtra("TICKET", tickets.get(position));
+                        startActivity(intent);
                     });
                     Log.d(TAG, tickets.toString());
                 } else {

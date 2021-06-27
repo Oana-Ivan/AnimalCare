@@ -1,11 +1,16 @@
 package com.example.animalcare.models;
 
-public class Ticket {
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Ticket implements Serializable {
     private String ticketID;
     private String username;
     private String title;
     private String text;
     private String status;
+    private String date;
     public static final String OPEN = "OPEN";
     public static final String CLOSED = "CLOSED";
 
@@ -18,6 +23,8 @@ public class Ticket {
         this.title = title;
         this.text = text;
         this.status = OPEN;
+        SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:sss'Z'");
+        date = ISO_8601_FORMAT.format(new Date());
     }
 
     public String getTicketID() {
@@ -58,5 +65,13 @@ public class Ticket {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -152,4 +152,5 @@
     <string name="adopter_sentencecase">Adopter</string>
     <string name="adopter_info">Adopter info</string>
     <string name="mark_visit_as_closed">Mark visit as closed.</string>
+    <string name="update_ticket">Update ticket</string>
 </resources>

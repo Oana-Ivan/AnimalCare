@@ -17,14 +17,16 @@ import java.util.ArrayList;
 
 public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketViewHolder> {
     private ArrayList<Ticket> tickets;
-    private OnItemClickListener onItemClickListener;
+    private OnItemClickListener onItemClickListener1;
+    private OnItemClickListener onItemClickListener2;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        onItemClickListener = listener;
+    public void setOnItemClickListener(OnItemClickListener listener1, OnItemClickListener listener2) {
+        onItemClickListener1 = listener1;
+        onItemClickListener2 = listener2;
     }
 
     public TicketAdapter(ArrayList<Ticket> tickets) {
@@ -35,7 +37,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketView
     @Override
     public TicketViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ticket_item, parent, false);
-        TicketViewHolder ticketViewHolder = new TicketViewHolder(view, onItemClickListener);
+        TicketViewHolder ticketViewHolder = new TicketViewHolder(view, onItemClickListener1, onItemClickListener2);
         return ticketViewHolder;
     }
 
@@ -62,7 +64,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketView
     public class TicketViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTV, usernameTV, textTV, statusTV, changeStatusTV;
 
-        public TicketViewHolder(@NonNull View itemView, TicketAdapter.OnItemClickListener listener) {
+        public TicketViewHolder(@NonNull View itemView, TicketAdapter.OnItemClickListener listener1, TicketAdapter.OnItemClickListener listener2) {
             super(itemView);
             titleTV = itemView.findViewById(R.id.ticket_item_title);
             usernameTV = itemView.findViewById(R.id.ticket_item_volunteer_name);
@@ -71,10 +73,19 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketView
             changeStatusTV = itemView.findViewById(R.id.ticket_item_change_status);
 
             changeStatusTV.setOnClickListener(v -> {
-                if (listener != null) {
+                if (listener1 != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(position);
+                        listener1.onItemClick(position);
+                    }
+                }
+            });
+
+            itemView.setOnClickListener(v -> {
+                if (listener2 != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener2.onItemClick(position);
                     }
                 }
             });
