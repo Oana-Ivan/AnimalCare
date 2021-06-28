@@ -10,13 +10,20 @@
 
     <LinearLayout
         android:id="@+id/activity_register_ll_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:layout_marginTop="20dp"
+
         app:layout_constraintBottom_toTopOf="@+id/activity_register_ll_form"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"/>
         <TextView
             android:id="@+id/activity_register_tv_page_name"
             android:layout_width="0dp"
@@ -24,18 +31,47 @@
 
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
             android:text="@string/register" />
 
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/activity_register_fragment_app_name"
+        <LinearLayout
+            android:id="@+id/fragment_app_name_ll_app_name"
             android:name="com.example.animalcare.fragments.AppNameAndLogoFragment"
             android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/fragment_app_name_img_screen_logo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+
+                android:layout_weight="2"
+                app:srcCompat="@drawable/logo_animal_care" />
+
+            <TextView
+                android:id="@+id/fragment_app_name_tv_app_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/color_schema_main"
+
+                android:textStyle="bold" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="0.5"/>
     </LinearLayout>
 
     <LinearLayout
@@ -56,6 +92,7 @@
             android:hint="@string/enter_username"
             android:background="@color/color_schema_background"
             android:padding="15dp"
+            android:inputType="text"
             />
 
         <EditText
@@ -67,6 +104,7 @@
             android:background="@color/color_schema_background"
             android:padding="15dp"
             android:layout_marginTop="15dp"
+            android:inputType="text"
             />
 
         <EditText
@@ -78,6 +116,7 @@
             android:background="@color/color_schema_background"
             android:padding="15dp"
             android:layout_marginTop="15dp"
+            android:inputType="text"
             />
 
         <EditText
@@ -89,6 +128,7 @@
             android:background="@color/color_schema_background"
             android:padding="15dp"
             android:layout_marginTop="15dp"
+            android:inputType="textEmailAddress"
             />
 
         <EditText
