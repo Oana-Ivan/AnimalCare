@@ -11,12 +11,14 @@ import android.widget.TextView;
 import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.CRUD.VolunteersListActivity;
 import com.example.animalcare.R;
+import com.example.animalcare.models.Animal;
+import com.example.animalcare.models.Visit;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 
 import static android.content.ContentValues.TAG;
+import static com.example.animalcare.models.Visit.STATUS_ON;
 
 public class ShelterManagementActivity extends AppCompatActivity {
     private TextView volunteersTV, animalsTV, adoptersTV, visitsTV;
@@ -58,7 +60,10 @@ public class ShelterManagementActivity extends AppCompatActivity {
         animalsCollection.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (DocumentSnapshot document : task.getResult()) {
-                    animalsSize++;
+                    Animal animal = (Animal) document.toObject(Animal.class);
+                    if (!animal.getWasAdopted()) {
+                        animalsSize++;
+                    }
                 }
                 String text = "Number of animals at the shelter: \n" + animalsSize;
                 animalsTV.setText(text);
@@ -84,7 +89,10 @@ public class ShelterManagementActivity extends AppCompatActivity {
         visitsCollection.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (DocumentSnapshot document : task.getResult()) {
-                    visitsSize++;
+                    Visit visit = (Visit) document.toObject(Visit.class);
+                    if (visit.getStatus().equals(STATUS_ON)) {
+                        visitsSize++;
+                    }
                 }
                 String text = "Number of schedule visits: \n" + visitsSize;
                 visitsTV.setText(text);

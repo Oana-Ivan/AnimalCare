@@ -7,11 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.models.Admin;
 import com.example.animalcare.usersMainScreens.AdminHomeActivity;
@@ -44,7 +42,7 @@ public class LoginAdminActivity extends AppCompatActivity {
                 Toast.makeText(LoginAdminActivity.this, "All fields required", Toast.LENGTH_LONG).show();
             }
             else if (admin.verifyCredentials(username, password)) {
-                Toast.makeText(LoginAdminActivity.this, "Welcome, admin", Toast.LENGTH_LONG).show();
+                // Toast.makeText(LoginAdminActivity.this, "Welcome, admin", Toast.LENGTH_LONG).show();
 
                 // Save username and user role in shared preferences
                 SharedPreferences sharedpreferences = getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);

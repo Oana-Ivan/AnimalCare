@@ -1,6 +1,5 @@
 package com.example.animalcare.adopterOptions.visits;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.animalcare.R;
-import com.example.animalcare.adminAndVolunteerOptions.VisitsAdapter;
 import com.example.animalcare.models.Visit;
 
 import java.util.ArrayList;

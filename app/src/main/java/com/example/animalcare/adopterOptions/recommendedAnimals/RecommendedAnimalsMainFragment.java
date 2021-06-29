@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.animalcare.R;
-import com.example.animalcare.animalsActivities.OptionsFragment;
 
 public class RecommendedAnimalsMainFragment extends Fragment {
     private AppCompatButton btnTest, btnResults;

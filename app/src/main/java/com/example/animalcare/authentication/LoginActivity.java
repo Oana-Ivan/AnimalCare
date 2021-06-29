@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(r -> {
             assignValues();
             if (!emptyFields()) {
-                firestoreInit();
+                fireStoreInit();
                 if (isVolunteerCB.isChecked()) {
                     volunteersCollection.document(username).get().addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -58,7 +58,8 @@ public class LoginActivity extends AppCompatActivity {
                             BasicUser user = document.toObject(BasicUser.class);
                             if (user != null) {
                                 if (passwordsMatch(password, user.getHashPassword())) {
-                                    Toast.makeText(LoginActivity.this, "Welcome", Toast.LENGTH_LONG).show();
+                                    // Toast.makeText(LoginActivity.this, "Welcome", Toast.LENGTH_LONG).show();
+
                                     // Save username and user role in shared preferences
                                     SharedPreferences sharedpreferences = getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -91,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                             BasicUser user = document.toObject(BasicUser.class);
                             if (user != null) {
                                 if (passwordsMatch(password, user.getHashPassword())) {
-                                    Toast.makeText(LoginActivity.this, "Welcome", Toast.LENGTH_LONG).show();
+                                    // Toast.makeText(LoginActivity.this, "Welcome", Toast.LENGTH_LONG).show();
 
                                     // Save username and user role in shared preferences
                                     SharedPreferences sharedpreferences = getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);
@@ -145,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
-    public void firestoreInit() {
+    public void fireStoreInit() {
         db = FirebaseFirestore.getInstance();
         usersCollection = db.collection("Users");
         volunteersCollection = db.collection("Volunteers");

@@ -154,4 +154,5 @@
     <string name="mark_visit_as_closed">Mark visit as closed.</string>
     <string name="update_ticket">Update ticket</string>
     <string name="update_volunteer">Update volunteer</string>
+    <string name="there_are_no_visits_with_status_on">There are no visits with the status ON.</string>
 </resources>

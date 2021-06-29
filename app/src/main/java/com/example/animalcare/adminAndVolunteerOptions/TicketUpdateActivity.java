@@ -3,9 +3,7 @@ package com.example.animalcare.adminAndVolunteerOptions;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
@@ -15,15 +13,12 @@ import com.example.animalcare.R;
 import com.example.animalcare.models.Ticket;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static android.content.ContentValues.TAG;
-import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
-import static com.example.animalcare.authentication.RegisterActivity.Username;
 
 public class TicketUpdateActivity extends AppCompatActivity {
     private Ticket currentTicket;
@@ -74,6 +69,7 @@ public class TicketUpdateActivity extends AppCompatActivity {
                         .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
 
                 // Redirect to TicketsListActivity
+                finish();
                 finish();
                 startActivity(new Intent(TicketUpdateActivity.this, TicketsListActivity.class));
             }

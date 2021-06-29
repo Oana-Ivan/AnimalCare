@@ -7,9 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.animalcare.adopterOptions.roomDatabase.entity.SavedAnimal;
-import com.example.animalcare.roomDatabase.entity.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao

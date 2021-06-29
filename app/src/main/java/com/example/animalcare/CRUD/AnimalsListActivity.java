@@ -3,7 +3,6 @@ package com.example.animalcare.CRUD;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,17 +13,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.animalcare.R;
 import com.example.animalcare.animalsActivities.AnimalDetailsActivity;
 import com.example.animalcare.models.Animal;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -65,57 +60,54 @@ public class AnimalsListActivity extends AppCompatActivity {
         // Retrieve animals data from Firestore
         db = FirebaseFirestore.getInstance();
         animalsCollection = db.collection("Animals");
-        animalsCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    animals = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Animal currentAnimal = document.toObject(Animal.class);
-                        if (!currentAnimal.getWasAdopted()) {
-                            animals.add(currentAnimal);
-                        }
+        animalsCollection.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                animals = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Animal currentAnimal = document.toObject(Animal.class);
+                    if (!currentAnimal.getWasAdopted()) {
+                        animals.add(currentAnimal);
                     }
-                    animalsAll = animals;
-
-                    animalsAdapter = new AnimalsAdapter(animals);
-
-                    animalsRV.setLayoutManager(animalsLayoutManager);
-                    animalsRV.setAdapter(animalsAdapter);
-
-                    // search
-                    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-                        @Override
-                        public boolean onQueryTextSubmit(String query) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onQueryTextChange(String newText) {
-                            filter(newText);
-                            return false;
-                        }
-                    });
-
-
-                    // click on animal
-                    animalsAdapter.setOnItemClickListener(position -> {
-                        Toast.makeText(AnimalsListActivity.this, animals.get(position).getSpecies(), Toast.LENGTH_SHORT).show();
-                        //  String usernameToRemove = animals.get(position).getAnimalID();
-                        Intent intent = new Intent(AnimalsListActivity.this, AnimalDetailsActivity.class);
-                        intent.putExtra("Animal", animals.get(position));
-                        startActivity(intent);
-                    });
-
-                    Log.d(TAG, animals.toString());
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
                 }
+                animalsAll = animals;
+
+                animalsAdapter = new AnimalsAdapter(animals);
+
+                animalsRV.setLayoutManager(animalsLayoutManager);
+                animalsRV.setAdapter(animalsAdapter);
+
+                // search
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        filter(newText);
+                        return false;
+                    }
+                });
+
+
+                // click on animal
+                animalsAdapter.setOnItemClickListener(position -> {
+                    //  String usernameToRemove = animals.get(position).getAnimalID();
+                    Intent intent = new Intent(AnimalsListActivity.this, AnimalDetailsActivity.class);
+                    intent.putExtra("Animal", animals.get(position));
+                    startActivity(intent);
+                });
+
+                Log.d(TAG, animals.toString());
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
             }
         });
 
         addBtn = findViewById(R.id.activity_animals_list_img_add);
+
         // Retrieve userRole from sharedPreferences
         SharedPreferences sharedpreferences = getSharedPreferences(UserPREFERENCES, Context.MODE_PRIVATE);
         String userRole = sharedpreferences.getString(UserRole, "");
@@ -181,10 +173,7 @@ public class AnimalsListActivity extends AppCompatActivity {
         if (filteredList.isEmpty()) {
             Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show();
         }
-//        else {
         animals = filteredList;
-//        }
-
         animalsAdapter.filterList(animals);
 
         if (text.equals("")) {

@@ -89,7 +89,7 @@ public class RecommendedAnimalsListFragment extends Fragment {
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Animal currentAnimal = document.toObject(Animal.class);
-                            // TODO Add only the items corresponding to the test
+                            // Add only the items corresponding to the test
 
                             if (currentAnimal.getAttentionLevelRequired() <= attention
                                     && currentAnimal.getCaringLevelRequired() <= caring

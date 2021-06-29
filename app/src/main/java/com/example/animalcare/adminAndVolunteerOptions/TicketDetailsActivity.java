@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.animalcare.R;
-import com.example.animalcare.models.Animal;
 import com.example.animalcare.models.Ticket;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -23,16 +22,13 @@ import static com.example.animalcare.authentication.RegisterActivity.UserPREFERE
 import static com.example.animalcare.authentication.RegisterActivity.Username;
 import static com.example.animalcare.models.Ticket.CLOSED;
 import static com.example.animalcare.models.Ticket.OPEN;
-import static com.example.animalcare.models.Visit.STATUS_OFF;
 
 public class TicketDetailsActivity extends AppCompatActivity {
     private TextView titleTV, textTV, usernameTV, closedTV, updateTV;
-    private String title, text, username, closed, update;
     private Ticket currentTicket;
 
     // cloud database
     public FirebaseFirestore db;
-    public CollectionReference ticketsCollection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +49,7 @@ public class TicketDetailsActivity extends AppCompatActivity {
                                     .set(currentTicket)
                                     .addOnSuccessListener((OnSuccessListener) o -> Log.d(TAG, "Updated status of ticket"))
                                     .addOnFailureListener(e -> Log.w(TAG, "Error updating ticket", e));
-                            // Redirect to all visits
+                            // Redirect to all tickets
                             finish();
                             startActivity(new Intent(TicketDetailsActivity.this, TicketsListActivity.class));
                         })
@@ -72,6 +68,7 @@ public class TicketDetailsActivity extends AppCompatActivity {
             updateTV.setOnClickListener(c -> {
                 Intent intent = new Intent(TicketDetailsActivity.this, TicketUpdateActivity.class);
                 intent.putExtra("TICKET", currentTicket);
+                finish();
                 startActivity(intent);
             });
         }

@@ -1,6 +1,7 @@
 package com.example.animalcare.adminAndVolunteerOptions;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,17 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.animalcare.CRUD.AddVolunteerActivity;
-import com.example.animalcare.CRUD.VolunteersAdapter;
-import com.example.animalcare.CRUD.VolunteersListActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.models.Visit;
-import com.example.animalcare.models.Volunteer;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -66,6 +64,12 @@ public class VisitsListActivity extends AppCompatActivity {
                             visits.add(currentVisit);
                         }
                     }
+
+                    if (visits.size() == 0) {
+                        TextView noVisits = findViewById(R.id.activity_visits_list_tv_no_visits);
+                        noVisits.setVisibility(View.VISIBLE);
+                    }
+
                     visitsAdapter = new VisitsAdapter(visits);
 
                     visitsRV.setLayoutManager(visitsLayoutManager);
@@ -73,14 +77,25 @@ public class VisitsListActivity extends AppCompatActivity {
 
                     // click on image
                     visitsAdapter.setOnItemClickListener(position -> {
-                        Toast.makeText(VisitsListActivity.this, visits.get(position).getAdopterUsername(), Toast.LENGTH_SHORT).show();
-                        visits.get(position).setStatus(Visit.STATUS_OFF);
+                        AlertDialog dialog = new AlertDialog.Builder(VisitsListActivity.this)
+                                .setTitle("Visit - " + visits.get(position).getAdopterUsername())
+                                .setMessage("Are you sure you want to mark this visit as closed?")
+                                .setPositiveButton("Yes", (dialog1, which) -> {
+                                    visits.get(position).setStatus(Visit.STATUS_OFF);
 
-                        // Update status of visit in collection
-                        visitsCollection.document(visits.get(position).getVisitID())
-                                .set(visits.get(position))
-                                .addOnSuccessListener((OnSuccessListener) o -> Log.d(TAG, "Updated visit"))
-                                .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
+                                    // Update status of visit in collection
+                                    visitsCollection.document(visits.get(position).getVisitID())
+                                            .set(visits.get(position))
+                                            .addOnSuccessListener((OnSuccessListener) o -> Log.d(TAG, "Updated visit"))
+                                            .addOnFailureListener(e -> Log.w(TAG, "Error updating document", e));
+
+                                    Toast.makeText(VisitsListActivity.this, "The visit of " + visits.get(position).getAdopterUsername() + " was marked as closed.", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    startActivity(getIntent());
+                                })
+                                .setNegativeButton("Cancel", null)
+                                .show();
+
                     }, position -> {
                         Intent intent = new Intent(VisitsListActivity.this, VisitDetailsActivity.class);
                         intent.putExtra(VISIT, visits.get(position));

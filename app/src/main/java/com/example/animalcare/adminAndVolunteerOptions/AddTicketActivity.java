@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.animalcare.R;
-import com.example.animalcare.authentication.RegisterActivity;
 import com.example.animalcare.models.Ticket;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;

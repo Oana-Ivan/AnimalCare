@@ -12,9 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.animalcare.CRUD.AnimalsAdapter;
-import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.adopterOptions.roomDatabase.AdopterOptionsDatabase;
 import com.example.animalcare.adopterOptions.roomDatabase.dao.SavedAnimalDAO;
@@ -30,8 +27,6 @@ import java.util.List;
 import static android.content.ContentValues.TAG;
 import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
 import static com.example.animalcare.authentication.RegisterActivity.Username;
-import static com.example.animalcare.models.Animal.DOG;
-import static com.example.animalcare.models.Animal.MALE;
 
 public class SavedAnimalsActivity extends AppCompatActivity {
     private RecyclerView animalsRV;

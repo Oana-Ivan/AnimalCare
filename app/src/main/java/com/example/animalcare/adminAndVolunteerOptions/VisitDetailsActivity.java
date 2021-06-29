@@ -1,34 +1,26 @@
 package com.example.animalcare.adminAndVolunteerOptions;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.animalcare.CRUD.AnimalsAdapter;
-import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.animalsActivities.AnimalDetailsActivity;
 import com.example.animalcare.models.Animal;
 import com.example.animalcare.models.BasicUser;
 import com.example.animalcare.models.Visit;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,26 +97,9 @@ public class VisitDetailsActivity extends AppCompatActivity {
                 animalsRV.setLayoutManager(gridLayoutManager);
                 animalsRV.setAdapter(animalAdapter);
 
-//                // search
-//                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//
-//                    @Override
-//                    public boolean onQueryTextSubmit(String query) {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean onQueryTextChange(String newText) {
-//                        filter(newText);
-//                        return false;
-//                    }
-//                });
-
-
                 // click on animal
                 animalAdapter.setOnItemClickListener(position -> {
                     Toast.makeText(VisitDetailsActivity.this, savedAnimalsList.get(position).getSpecies(), Toast.LENGTH_SHORT).show();
-                    //  String usernameToRemove = animals.get(position).getAnimalID();
                     Intent intent = new Intent(VisitDetailsActivity.this, AnimalDetailsActivity.class);
                     intent.putExtra("Animal", savedAnimalsList.get(position));
                     startActivity(intent);

@@ -1,6 +1,7 @@
 package com.example.animalcare.adminAndVolunteerOptions;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,13 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.animalcare.CRUD.VolunteersAdapter;
-import com.example.animalcare.CRUD.VolunteersListActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.models.Ticket;
-import com.example.animalcare.models.Volunteer;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -51,47 +48,53 @@ public class TicketsListActivity extends AppCompatActivity {
         // Retrieve tickets data from FireStore
         db = FirebaseFirestore.getInstance();
         ticketsCollection = db.collection("Tickets");
-        ticketsCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    ArrayList<Ticket> tickets = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Ticket currentTicket = document.toObject(Ticket.class);
-                        if (currentTicket.getStatus().equals(OPEN)){
-                            tickets.add(currentTicket);
-                        }
+        ticketsCollection.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                ArrayList<Ticket> tickets = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Ticket currentTicket = document.toObject(Ticket.class);
+                    if (currentTicket.getStatus().equals(OPEN)){
+                        tickets.add(currentTicket);
                     }
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Ticket currentTicket = document.toObject(Ticket.class);
-                        if (currentTicket.getStatus().equals(CLOSED)){
-                            tickets.add(currentTicket);
-                        }
-                    }
-                    ticketAdapter = new TicketAdapter(tickets);
-
-                    ticketsRV.setLayoutManager(layoutManager);
-                    ticketsRV.setAdapter(ticketAdapter);
-
-                    // click on close ticket
-                    ticketAdapter.setOnItemClickListener(position -> {
-                        Toast.makeText(TicketsListActivity.this, tickets.get(position).getUsername(), Toast.LENGTH_SHORT).show();
-                        tickets.get(position).setStatus(Ticket.CLOSED);
-                        ticketsCollection.document(tickets.get(position).getTicketID())
-                                .set(tickets.get(position))
-                                .addOnSuccessListener((OnSuccessListener) o -> Log.d(TAG, "Added new user"))
-                                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
-
-
-                    }, position -> {
-                        Intent intent = new Intent(TicketsListActivity.this, TicketDetailsActivity.class);
-                        intent.putExtra("TICKET", tickets.get(position));
-                        startActivity(intent);
-                    });
-                    Log.d(TAG, tickets.toString());
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
                 }
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Ticket currentTicket = document.toObject(Ticket.class);
+                    if (currentTicket.getStatus().equals(CLOSED)){
+                        tickets.add(currentTicket);
+                    }
+                }
+                ticketAdapter = new TicketAdapter(tickets);
+
+                ticketsRV.setLayoutManager(layoutManager);
+                ticketsRV.setAdapter(ticketAdapter);
+
+                // click on close ticket
+                ticketAdapter.setOnItemClickListener(position -> {
+                    AlertDialog dialog = new AlertDialog.Builder(TicketsListActivity.this)
+                            .setTitle("Tickets - " + tickets.get(position).getTitle())
+                            .setMessage("Are you sure you want to mark this ticket as closed?")
+                            .setPositiveButton("Yes", (dialog1, which) -> {
+                                tickets.get(position).setStatus(Ticket.CLOSED);
+                                ticketsCollection.document(tickets.get(position).getTicketID())
+                                        .set(tickets.get(position))
+                                        .addOnSuccessListener((OnSuccessListener) o -> Log.d(TAG, "Updated ticket"))
+                                        .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
+                                Toast.makeText(TicketsListActivity.this, "Ticket " + tickets.get(position).getTitle() + " set as closed.", Toast.LENGTH_SHORT).show();
+                                finish();
+                                startActivity(getIntent());
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .show();
+
+                }, position -> {
+                    Intent intent = new Intent(TicketsListActivity.this, TicketDetailsActivity.class);
+                    intent.putExtra("TICKET", tickets.get(position));
+                    finish();
+                    startActivity(intent);
+                });
+                Log.d(TAG, tickets.toString());
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
             }
         });
 

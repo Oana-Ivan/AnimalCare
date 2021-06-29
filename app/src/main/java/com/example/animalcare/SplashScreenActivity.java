@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.usersMainScreens.AdminHomeActivity;
 import com.example.animalcare.usersMainScreens.AdopterHomeActivity;
 import com.example.animalcare.usersMainScreens.VolunteerHomeActivity;

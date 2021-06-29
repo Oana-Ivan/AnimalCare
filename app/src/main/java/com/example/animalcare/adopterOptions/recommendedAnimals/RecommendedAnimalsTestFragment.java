@@ -50,7 +50,6 @@ public class RecommendedAnimalsTestFragment extends Fragment {
         return view;
     }
 
-    // TODO results test
     private void calculateResults() {
         int potentialProvidedAttention = 0;
         int potentialProvidedCaring = 0;

@@ -2,12 +2,10 @@ package com.example.animalcare.animalsActivities;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
@@ -17,13 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.animalcare.CRUD.AnimalsListActivity;
 import com.example.animalcare.CRUD.UpdateAnimalActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.models.Animal;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,10 +26,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import static android.content.ContentValues.TAG;
 import static com.example.animalcare.animalsActivities.AnimalDetailsActivity.CurrentAnimal;
 import static com.example.animalcare.animalsActivities.AnimalDetailsActivity.currentAnimalID;
-import static com.example.animalcare.authentication.RegisterActivity.UserPREFERENCES;
-import static com.example.animalcare.authentication.RegisterActivity.Username;
-import static com.example.animalcare.models.Animal.DOG;
-import static com.example.animalcare.models.Animal.MALE;
 
 public class OptionsFragment extends Fragment {
     private AppCompatButton deleteBtn, updateBtn;
@@ -69,24 +60,6 @@ public class OptionsFragment extends Fragment {
                     .setTitle("Remove animal")
                     .setMessage("Are you sure you want to remove this animal from the shelter database?")
                     .setPositiveButton("Yes", (dialog1, which) -> {
-                        // Code to delete from FireStore
-//                            animalsCollection.document(animalID)
-//                                    .delete()
-//                                    .addOnSuccessListener(new OnSuccessListener() {
-//                                        @Override
-//                                        public void onSuccess(Object o) {
-//                                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
-//                                        }
-//
-//                                    })
-//                                    .addOnFailureListener(new OnFailureListener() {
-//                                        @Override
-//                                        public void onFailure(@NonNull Exception e) {
-//                                            Log.w(TAG, "Error deleting document", e);
-//                                        }
-//                                    });
-
-
                         // Modify wasAdopted to true
                         // Get the data from FireStore for the current animal
                         animalsCollection.document(animalID).get().addOnCompleteListener(task -> {
@@ -116,27 +89,14 @@ public class OptionsFragment extends Fragment {
                                 Log.d(TAG, "Failed with: ", task.getException());
                             }
                         });
-
-//                            Toast.makeText(getContext(), "Animal deleted", Toast.LENGTH_SHORT).show();
-
-//                            SharedPreferences.Editor editor = sharedpreferences.edit();
-//                            editor.putString(update, "yes");
-//                            editor.apply();
-
-//                            getActivity().finish();
-//                            startActivity(new Intent(getContext(), AnimalsListActivity.class));
-
                     })
                     .setNegativeButton("Cancel", null)
                     .show();
         });
 
         updateBtn.setOnClickListener(u -> {
-//            SharedPreferences sharedpreferences = getContext().getSharedPreferences(CurrentAnimal, Context.MODE_PRIVATE);
-//            String animalID = sharedpreferences.getString(currentAnimalID, "");
-
             Intent intent = new Intent(getContext(), UpdateAnimalActivity.class);
-//            intent.putExtra("Animal", )
+            getActivity().finish();
             startActivity(intent);
         });
 

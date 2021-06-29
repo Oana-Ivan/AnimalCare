@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.animalcare.adopterOptions.roomDatabase.entity.RecommendedAnimal;
-import com.example.animalcare.adopterOptions.roomDatabase.entity.SavedAnimal;
 
 import java.util.List;
 

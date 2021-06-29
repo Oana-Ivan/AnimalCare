@@ -93,20 +93,17 @@ public class AddAnimalActivity extends AppCompatActivity {
                 animalID = "animal_" + collectionSize;
 
                 progressDialog = new ProgressDialog(this);
-                animalImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (ContextCompat.checkSelfPermission(AddAnimalActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                Toast.makeText(AddAnimalActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
-                                ActivityCompat.requestPermissions(AddAnimalActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                animalImage.setOnClickListener(view -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (ContextCompat.checkSelfPermission(AddAnimalActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(AddAnimalActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
+                            ActivityCompat.requestPermissions(AddAnimalActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-                            } else {
-                                choseImage();
-                            }
                         } else {
                             choseImage();
                         }
+                    } else {
+                        choseImage();
                     }
                 });
 
@@ -172,63 +169,56 @@ public class AddAnimalActivity extends AppCompatActivity {
                                     // Continue with the task to get the download URL
                                     return storageReference.child("animal_image").child(animalID + ".jpg").getDownloadUrl();
                                 }
-                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Uri> task1) {
-                                    if (task1.isSuccessful()) {
-                                        Uri downloadUri = task1.getResult();
-                                        image = downloadUri.toString();
+                            }).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    Uri downloadUri = task1.getResult();
+                                    image = downloadUri.toString();
 
-                                        Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, image);
-                                        newAnimal.setBreed(breed);
+                                    Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, image);
+                                    newAnimal.setBreed(breed);
 
-                                        db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task1) {
-                                                if (task1.isSuccessful()) {
-                                                    progressDialog.dismiss();
-                                                    Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
-
-                                                    // Redirect to All animals
-                                                    Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
-                                                    finish();
-                                                    startActivity(intent);
-                                                } else {
-                                                    String error = task1.getException().getMessage();
-                                                    Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
-                                                }
+                                    db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task1) {
+                                            if (task1.isSuccessful()) {
                                                 progressDialog.dismiss();
+                                                Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
+
+                                                // Redirect to All animals
+                                                Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
+                                                finish();
+                                                startActivity(intent);
+                                            } else {
+                                                String error = task1.getException().getMessage();
+                                                Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
                                             }
+                                            progressDialog.dismiss();
+                                        }
 
-                                        });
+                                    });
 
-                                    } else {
-                                        // Handle failures
-                                    }
+                                } else {
+                                    // Handle failures
                                 }
                             });
                         } else {
                             Animal newAnimal = new Animal(arrivingDate, ageD, gender, species, color, description, disease, personalityType, size, animalID, null);
                             newAnimal.setBreed("unknown");
 
-                            db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task1) {
-                                    if (task1.isSuccessful()) {
-                                        progressDialog.dismiss();
-                                        Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
-
-                                        // Redirect to All animals
-                                        Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
-                                        finish();
-                                        startActivity(intent);
-                                    } else {
-                                        String error = task1.getException().getMessage();
-                                        Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
-                                    }
+                            db.collection("Animals").document(animalID).set(newAnimal).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
                                     progressDialog.dismiss();
-                                }
+                                    Toast.makeText(AddAnimalActivity.this, "Animal Data is Stored Successfully", Toast.LENGTH_LONG).show();
 
+                                    // Redirect to All animals
+                                    Intent intent = new Intent(AddAnimalActivity.this, AnimalsListActivity.class);
+                                    finish();
+                                    startActivity(intent);
+                                } else {
+                                    String error = task1.getException().getMessage();
+                                    Toast.makeText(AddAnimalActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
+                                }
+                                progressDialog.dismiss();
                             });
                         }
                     }

@@ -15,9 +15,6 @@ import com.example.animalcare.MainActivity;
 import com.example.animalcare.R;
 import com.example.animalcare.adminAndVolunteerOptions.ShelterManagementActivity;
 import com.example.animalcare.adminAndVolunteerOptions.VisitsListActivity;
-import com.example.animalcare.authentication.LoginActivity;
-import com.example.animalcare.authentication.LoginAdminActivity;
-import com.example.animalcare.authentication.RegisterActivity;
 import com.example.animalcare.models.Volunteer;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -103,7 +100,6 @@ public class VolunteerHomeActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-//                finish();
                 switch (option) {
                     case 0:
                         // Animals

@@ -101,30 +101,43 @@ public class AnimalDetailsActivity extends AppCompatActivity {
         animalSpeciesTV.setText(needs);
 
         String caringInfo = "";
-        // TODO Add facts about animal
         if (currentAnimal.getSpecies().equals(Animal.DOG)) {
-            caringInfo += "BASIC\n - Food and water;\n - Places to sleep\n - Exercise\n - Basic supplies\n - Grooming\n";
+            caringInfo += "BASIC\n - Food and water;\n - Places to sleep;\n - Exercise;\n - Basic supplies;\n - Grooming.\n";
             if (currentAnimal.getAge() <= 1) {
-                caringInfo += "\nBASED ON AGE\nA junior dog will require more attention, it will have a lot of energy and will require more checkups to the veterinarian\n";
+                caringInfo += "\nBASED ON AGE\nA junior dog will require more attention, it will have a lot of energy and will require more checkups to the veterinarian.\n";
             }
-            else caringInfo += "\nBASED ON AGE\n"; //"old\n";
+            else caringInfo += "\nBASED ON AGE\nAn older dog will need less attention.";
         }
         else {
-            caringInfo += "BASIC\n - Food and water;\n - Places to sleep\n - Basic supplies\n";
+            caringInfo += "BASIC\n - Food and water;\n - Places to sleep;\n - Basic supplies.\n";
             if (currentAnimal.getAge() < 1) {
-                caringInfo += "\nBASED ON AGE\nA junior cat will require more attention, it will have a lot of energy and will require more checkups to the veterinarian\n";
+                caringInfo += "\nBASED ON AGE\nA junior cat will require more attention, it will have a lot of energy and will require more checkups to the veterinarian.\n";
             }
-            else caringInfo += "\nBASED ON AGE\n"; //"old\n";
+            else caringInfo += "\nBASED ON AGE\nAn older dog will need less attention.\n";
         }
 
         if (currentAnimal.getDisease()) {
-            caringInfo += "\nILLNESSES\nYou need to be prepared to  \n";
+            caringInfo += "\nILLNESSES\nThis animal is suspected of disease, so you need to be prepared to attend to his needs correspondingly. \nIt can give you a lot of love, but it will probably need more of your time.\n";
+        }
+        else {
+            caringInfo += "\nILLNESSES\nThis animal is healthy based on the opinion of the shelter staff.";
         }
 
         if (currentAnimal.getAttentionLevelRequired() == 1) {
-            caringInfo += "\nREQUIRED ATTENTION\nThis animal will probable require little attention";
+            caringInfo += "\n\nREQUIRED ATTENTION\nBased on the characteristics of the animal, it will require a low volume of attention.\nThe level of attention is based on characteristics such as age, personality, sex, etc.";
+        } else if (currentAnimal.getAttentionLevelRequired() == 2) {
+            caringInfo += "\n\nREQUIRED ATTENTION\nBased on the characteristics of the animal, it will require an average volume of attention.\nThe level of attention is based on characteristics such as age, personality, gender, etc.";
         } else if (currentAnimal.getAttentionLevelRequired() == 3) {
-            caringInfo += "\nREQUIRED ATTENTION\nThis animal will probable require a lot of attention";
+            caringInfo += "\n\nREQUIRED ATTENTION\nBased on the characteristics of the animal, it will require an additional volume of attention.\nThe level of attention is based on characteristics such as age, personality, gender, etc.";
+        }
+
+
+        if (currentAnimal.getCaringLevelRequired() == 1) {
+            caringInfo += "\n\n! REQUIRED CARE\nBased on the characteristics of the animal, it will require a low volume of care.\nThe level of care is based on characteristics such as age, personality, gender, etc.";
+        } else if (currentAnimal.getCaringLevelRequired() == 2) {
+            caringInfo += "\n\n!! REQUIRED CARE\nBased on the characteristics of the animal, it will require an average volume of care.\nThe level of care is based on characteristics such as age, personality, gender, etc.";
+        } else if (currentAnimal.getCaringLevelRequired() == 3) {
+            caringInfo += "\n\n!!! REQUIRED CARE\nBased on the characteristics of the animal, it will require an additional volume of care.\nThe level of care is based on characteristics such as age, personality, gender, etc.";
         }
 
         caringInfoTV.setText(caringInfo);

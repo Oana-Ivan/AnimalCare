@@ -1,9 +1,7 @@
 package com.example.animalcare.authentication;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,27 +13,13 @@ import android.widget.Toast;
 
 import com.example.animalcare.R;
 import com.example.animalcare.models.BasicUser;
-import com.example.animalcare.roomDatabase.AppDatabase;
-import com.example.animalcare.roomDatabase.dao.UserDAO;
-import com.example.animalcare.roomDatabase.entity.User;
 import com.example.animalcare.usersMainScreens.AdopterHomeActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.mindrot.jbcrypt.BCrypt;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import io.realm.Realm;
 
 import static android.content.ContentValues.TAG;
 
@@ -50,7 +34,6 @@ public class RegisterActivity extends AppCompatActivity {
     public static final String ADOPTER = "ADOPTER";
     public static final String VOLUNTEER = "VOLUNTEER";
     public static final String ADMIN = "ADMIN";
-    int userId = 0;
 
     // cloud database
     public FirebaseFirestore db;
